@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Resources;
+
+use Wangcan\Foundation\Resources\AbstractCollection;
+
+class %CLASS% extends AbstractCollection
+{
+}

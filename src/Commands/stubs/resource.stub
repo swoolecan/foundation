@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Resources;
+
+use Wangcan\Foundation\Resources\AbstractResource;
+
+class %CLASS% extends AbstractResource
+{
+}

@@ -1,0 +1,41 @@
+{
+    "name": "wangcan/foundation",
+    "description": "PHP基础代码",
+    "keywords": [
+        "php",
+        "hyperf",
+        "foundation",
+        "swoole",
+        "laravel"
+    ],
+    "homepage": "https://github.com/wangcan/foundation",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wangcan",
+            "homepage": "https://github.com/wangcan",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wangcan\\Foundation\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wangcan\\Foundation\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
