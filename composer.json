@@ -22,12 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Swoolecan\\": "src"
+            "Swoolecan\\Foundation\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Swoolecan\\Test\\": "tests"
+            "Swoolecan\\Foundation\\Test\\": "tests"
         }
     },
     "scripts": {
