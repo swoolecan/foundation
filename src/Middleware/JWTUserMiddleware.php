@@ -2,15 +2,15 @@
 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Middleware;
+namespace Swoolecan\Foundation\Middleware;
 
 use Hyperf\Utils\Context;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Wangcan\Foundation\RpcClient\PassportRpcClient;
-use Wangcan\Foundation\Exceptions\BusinessException;
+use Swoolecan\Foundation\RpcClient\PassportRpcClient;
+use Swoolecan\Foundation\Exceptions\BusinessException;
 
 class JWTUserMiddleware implements MiddlewareInterface
 {

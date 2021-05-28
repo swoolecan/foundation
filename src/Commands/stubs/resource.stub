@@ -2,7 +2,7 @@
 
 namespace App\Resources;
 
-use Wangcan\Foundation\Resources\AbstractResource;
+use Swoolecan\Foundation\Resources\AbstractResource;
 
 class %CLASS% extends AbstractResource
 {

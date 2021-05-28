@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Repositories;
+namespace Swoolecan\Foundation\Repositories;
 
 use Hyperf\Utils\Str;
 

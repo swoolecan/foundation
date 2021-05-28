@@ -1,7 +1,7 @@
 <?php 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Criteria;
+namespace Swoolecan\Foundation\Criteria;
 
 class BetweenCriteria extends Criteria
 {

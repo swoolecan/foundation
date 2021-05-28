@@ -1,9 +1,9 @@
 <?php 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Criteria;
+namespace Swoolecan\Foundation\Criteria;
 
-use Wangcan\Foundation\Contracts\RepositoryInterface;
+use Swoolecan\Foundation\Contracts\RepositoryInterface;
 
 class RelateCriteria extends Criteria
 {

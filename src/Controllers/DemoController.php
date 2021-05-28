@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Controllers;
+namespace Swoolecan\Foundation\Controllers;
 
 use App\Http\Resource\UserCollection;
 use App\Http\Resource\UserResource;

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Repositories;
+namespace Swoolecan\Foundation\Repositories;
 
 trait TraitSearchField
 {
@@ -13,7 +13,7 @@ trait TraitSearchField
 
         $sortElem = $params['sort_elem'] ? json_decode($params['sort_elem'], true) : false;
         if (!empty($sortElem)) {
-            $criteriaClass = '\Wangcan\Foundation\Criteria\SortCriteria';
+            $criteriaClass = '\Swoolecan\Foundation\Criteria\SortCriteria';
             $this->pushCriteria(new $criteriaClass($sortElem));
         }
 
@@ -39,7 +39,7 @@ trait TraitSearchField
             $type = $data['type'] ?? 'common';
             $type = ucfirst($type);
 
-            $criteriaClass = "\Wangcan\Foundation\Criteria\\{$type}Criteria";
+            $criteriaClass = "\Swoolecan\Foundation\Criteria\\{$type}Criteria";
             $this->pushCriteria(new $criteriaClass($data));
             //$repository->pushCriteria($criteria);
         }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Helpers;
+namespace Swoolecan\Foundation\Helpers;
 
 class CommonTool
 {

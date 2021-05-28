@@ -1,6 +1,6 @@
 <?php
 
-namespace Wangcan\Foundation\Controllers;
+namespace Swoolecan\Foundation\Controllers;
 
 trait OperationTrait
 {

@@ -2,7 +2,7 @@
 
 namespace App\Resources;
 
-use Wangcan\Foundation\Resources\AbstractCollection;
+use Swoolecan\Foundation\Resources\AbstractCollection;
 
 class %CLASS% extends AbstractCollection
 {

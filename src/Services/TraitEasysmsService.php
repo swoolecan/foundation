@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Services;
+namespace Swoolecan\Foundation\Services;
 
 trait TraitEasysmsService
 {

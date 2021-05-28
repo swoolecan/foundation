@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Middleware;
+namespace Swoolecan\Foundation\Middleware;
 
 trait TraitPermissionMiddleware
 {

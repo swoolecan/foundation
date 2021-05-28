@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Controllers;
+namespace Swoolecan\Foundation\Controllers;
 
 abstract class AbstractController
 {

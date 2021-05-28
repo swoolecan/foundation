@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Models;
+namespace Swoolecan\Foundation\Models;
 
 trait TraitModel
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Helpers;
+namespace Swoolecan\Foundation\Helpers;
 
-use Wangcan\Foundation\Constants\Code;
+use Swoolecan\Foundation\Constants\Code;
 
 Class Helper
 {

@@ -1,5 +1,5 @@
 {
-    "name": "wangcan/foundation",
+    "name": "swoolecan/foundation",
     "description": "PHP基础代码",
     "keywords": [
         "php",
@@ -8,12 +8,12 @@
         "swoole",
         "laravel"
     ],
-    "homepage": "https://github.com/wangcan/foundation",
+    "homepage": "https://github.com/swoolecan/foundation",
     "license": "MIT",
     "authors": [
         {
             "name": "wangcan",
-            "homepage": "https://github.com/wangcan",
+            "homepage": "https://github.com/swoolecan",
             "role": "Developer"
         }
     ],
@@ -22,12 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Wangcan\\Foundation\\": "src"
+            "Swoolecan\\Foundation\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Wangcan\\Foundation\\Test\\": "tests"
+            "Swoolecan\\Foundation\\Test\\": "tests"
         }
     },
     "scripts": {

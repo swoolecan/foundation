@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Wangcan\Foundation\Requests;
+namespace Swoolecan\Foundation\Requests;
 
 trait TraitRequest
 {
