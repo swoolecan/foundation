@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Controllers;
 
-abstract class AbstractController
+trait TraitController
 {
     use OperationTrait;
 
