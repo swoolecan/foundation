@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Criteria;
 
-class SortCriteria extends Criteria
+trait TraitSortCriteria
 {
     public function _pointApply($query, $repository)
     {

@@ -12,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Swoolecan\Foundation\RpcClient\PassportRpcClient;
 use Swoolecan\Foundation\Exceptions\BusinessException;
 
-class JWTUserMiddleware implements MiddlewareInterface
+trait TraitJWTUserMiddleware
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

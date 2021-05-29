@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Criteria;
 
-class OrCriteria extends Criteria
+trait TraitOrCriteria
 {
     public function _pointApply($query, $repository)
     {

@@ -14,7 +14,7 @@ use Phper666\JWTAuth\Util\JWTUtil;
 
 use Hyperf\Utils\Context;
 
-class JWTAuthMiddleware extends JWTAuthMiddlewareBase implements MiddlewareInterface
+trait TraitJWTAuthMiddleware
 {
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

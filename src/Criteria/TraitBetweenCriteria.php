@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Criteria;
 
-class BetweenCriteria extends Criteria
+trait TraitBetweenCriteria
 {
     public function _pointApply($query, $repository)
     {

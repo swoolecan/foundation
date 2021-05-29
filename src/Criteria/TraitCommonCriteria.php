@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Criteria;
 
-class CommonCriteria extends Criteria
+trait TraitCommonCriteria
 {
     public function _pointApply($query, $repository)
     {

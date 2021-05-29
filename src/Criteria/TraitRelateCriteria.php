@@ -5,7 +5,7 @@ namespace Swoolecan\Foundation\Criteria;
 
 use Swoolecan\Foundation\Contracts\RepositoryInterface;
 
-class RelateCriteria extends Criteria
+trait TraitRelateCriteria
 {
     public function _pointApply($query, $repository)
     {
