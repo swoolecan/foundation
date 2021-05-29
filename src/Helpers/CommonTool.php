@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Helpers;
@@ -19,5 +20,63 @@ class CommonTool
             $string .= $chars[mt_rand(0, strlen($chars) - 1)];
         }
         return strtolower(base_convert(time() - 1420070400, 10, 36)) . $string;
+    }
+
+    /**
+     * 数字转换为中文
+     * @param  string|integer|float  $num  目标数字
+     * @return string
+     */
+    public static function numberToChinese($number)
+    {
+        if (!is_numeric($number)) {
+            return $number; // '含有非数字非小数点字符！';
+        }
+        $char = ['零','一','二','三','四','五','六','七','八','九'];
+        $unit = ['','十','百','千','','万','亿','兆'];
+
+        $retval  = '点';
+        // 小数部分
+        if (strpos($number, '.')) {
+            list($num, $dec) = explode('.', $number);
+            $dec = strval(round($dec, 2));
+            for($i = 0,$c = strlen($dec);$i < $c;$i++) {
+                $retval .= $char[$dec[$i]];
+            }
+        }
+
+        // 整数部分
+        $str = strrev(intval($number));
+        for ($i = 0, $c = strlen($str); $i < $c; $i++) {
+            $out[$i] = $char[$str[$i]];
+            $out[$i] .= $str[$i] != '0'? $unit[$i%4] : '';
+            if($i>1 and $str[$i]+$str[$i-1] == 0){
+                $out[$i] = '';
+            }
+            if($i%4 == 0){
+                $out[$i] .= $unit[4+floor($i/4)];
+            }
+        }
+        $retval = join('', array_reverse($out)) . $retval;
+        return $retval;
+    }
+
+    public static function createTree(& $infos, $parent = '', $indexBy = 'key', $parentField = 'parent_code', $keyField = 'code')
+    {
+        $datas = [];
+        foreach ($infos as $key => $info) {
+            if ($info[$parentField] != $parent) {
+                continue;
+            }
+            unset($infos[$key]);
+
+            $info['subInfos'] = self::createTree($infos, $info[$keyField], $indexBy, $parentField, $keyField);
+            if ($indexBy == 'num') {
+                $datas[] = $info;
+            } else {
+                $datas[$info[$keyField]] = $info;
+            }
+        }
+        return $datas;
     }
 }

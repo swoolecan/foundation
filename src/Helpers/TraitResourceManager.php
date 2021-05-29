@@ -29,13 +29,13 @@ trait TraitResourceManager
         $code = $elems[2];
         $type = $elems[1];
 
-        $type = Str::singular($type);
+        $type = $this->strOperation($type, 'singular');//Str::singular($type);
 
         $pos = strripos($code, $type);
         if ($pos !== false) {
             $code = substr($code, 0, $pos);
         }
-        //$code = Str::snake($code, '-');
+        //$code = $this->strOperation($code, 'snake', '-');//Str::snake($code, '-');
         $code = lcfirst($code);
         return $code;
     }
@@ -50,7 +50,7 @@ trait TraitResourceManager
         if (isset($this->objects[$class])) {
             return $this->objects[$class];
         }
-        $obj = make($class);
+        $obj = $this->getObjectByClass($class);
         if (method_exists($obj, 'init')) {
             $obj->init($params);
         }
@@ -69,10 +69,10 @@ trait TraitResourceManager
         }
 
         $info = $this->resources[$code];
-        $class = isset($info[$type]) ? $info[$type] : false;
-        if (empty($class) && $type == 'service-repo') {
+        $class = $info[$type] ?? false;
+        /*if (empty($class) && $type == 'service-repo') {
             $class = isset($info['service']) ? $info['service'] : (isset($info['repository']) ? $info['repository'] : '');
-        }
+        }*/
         return strval($class);
     }
 
@@ -88,20 +88,6 @@ trait TraitResourceManager
         return $ip[0];
     }
 
-    public function throwException($code, $message = null)
-    {
-        throw new BusinessException($code, $message);
-    }
-
-    /**
-     * @Cacheable(prefix="common-resource")
-     */
-    protected function getResourceDatas($key = 'resources')
-    {
-        $datas = $this->config->get('resource');
-        return $datas;
-    }
-
     public function initRouteDatas()
     {
         $routes = $this->_routeDatas('routes');
@@ -113,22 +99,10 @@ trait TraitResourceManager
         return $routes[$this->appCode];
     }
 
-    /**
-     * @Cacheable(prefix="common-route")
-     */
-    protected function _routeDatas($key)
-    {
-        //$routes = require('/data/htmlwww/docker/container/passport/config/autoload/routes.php');
-        if ($this->appCode == 'passport') {
-            return $this->config->get('routes');
-        }
-        return null;
-    }
-
     public function formatClass($elem, $code)
     {
-        $codeUpper = Str::studly($code);
-        $elemUpper = Str::studly($elem);
+        $codeUpper = $this->strOperation($code, 'studly');//Str::studly($code);
+        $elemUpper = $this->strOperation($elem, 'studly');//Str::studly($elem);
         $elemPath = $elem == 'repository' ? 'Repositories' : ($elem == 'collection' ? 'Resources' : "{$elemUpper}s");
         $class = "App\\{$elemPath}\\{$codeUpper}";
 
@@ -136,5 +110,10 @@ trait TraitResourceManager
             $class .= "{$elemUpper}";
         }
         return $class;
+    }
+
+    public function strOperation($string, $operation)
+    {
+        return $string;
     }
 }
