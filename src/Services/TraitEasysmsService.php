@@ -3,6 +3,11 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Services;
 
+use Overtrue\EasySms\EasySms;
+//use Hyperf\Cache\Annotation\Cacheable;
+//use Hyperf\Cache\Annotation\CachePut;
+//use Framework\Baseapp\Helpers\SysOperation;
+
 trait TraitEasysmsService
 {
     protected $createInfo;
