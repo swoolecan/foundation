@@ -6,7 +6,7 @@ namespace Swoolecan\Foundation\Repositories;
 use Hyperf\Cache\Annotation\CachePut;
 use Hyperf\Cache\Annotation\Cacheable;
 
-trait TraitData
+trait DataTrait
 {
     /*public function getPointValues($resourceCode)
     {

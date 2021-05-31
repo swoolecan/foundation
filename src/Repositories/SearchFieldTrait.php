@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Repositories;
 
-trait TraitSearchField
+trait SearchFieldTrait
 {
     public function getDealSearchFields($scene, $params)
     {

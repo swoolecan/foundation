@@ -4,12 +4,8 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Repositories;
 
-trait TraitField
+trait FieldTrait
 {
-    use TraitFormField;
-    use TraitShowField;
-    use TraitSearchField;
-
     public function getAttributeNames($scene = null)
     {
         $datas = array_merge($this->model->getColumnElems(), $this->extAttributeNames());

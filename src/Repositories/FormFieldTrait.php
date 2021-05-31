@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Repositories;
 
-trait TraitFormField
+trait FormFieldTrait
 {
     public function getFormatFormFields($scene)
     {

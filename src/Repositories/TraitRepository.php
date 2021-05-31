@@ -6,6 +6,12 @@ namespace Swoolecan\Foundation\Repositories;
 
 trait TraitRepository
 {
+    use DataTrait;
+    use FieldTrait;
+    use FormFieldTrait;
+    use SearchFieldTrait;
+    use ShowFieldTrait;
+    use TreeTrait;
 
     protected $newModel;
     protected $pointModel;

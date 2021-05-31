@@ -6,7 +6,7 @@ namespace Swoolecan\Foundation\Repositories;
 
 use Hyperf\Utils\Str;
 
-trait TraitShowField
+trait ShowFieldTrait
 {
     public function getFormatShowFields($scene, $model, $simple = false)
     {
