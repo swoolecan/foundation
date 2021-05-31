@@ -31,7 +31,7 @@ trait TraitService
         return $this->resource->getObject('repository', $code);
     }
 
-    protected function _writeLog($return, $mobile, $content, $sort, $startTime)
+    /*protected function _writeLog($return, $mobile, $content, $sort, $startTime)
     {
         $endTime = microtime(true);
         $timeUsed = number_format($endTime - $startTime, 3);
@@ -49,5 +49,5 @@ trait TraitService
         file_put_contents($logFile, $content, FILE_APPEND);
 
         return true;
-    }
+    }*/
 }

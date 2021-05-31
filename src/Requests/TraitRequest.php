@@ -36,7 +36,7 @@ trait TraitRequest
 
     public function routeParam(string $key, $default)
     {
-        $route = $this->getAttribute(Dispatched::class);
+        $route = $this->getCurrentRoute();
         if (is_null($route)) {
             return $default;
         }
@@ -95,8 +95,13 @@ trait TraitRequest
         return $data;
     }
 
+    public function getCurrentRoute()
+    {
+        return null;
+    }
+
     protected function _getKeyValues($field)
     {
-        return Rule::in(array_keys($this->getRepository()->getKeyValues($field)));
+        return [];
     }
 }
