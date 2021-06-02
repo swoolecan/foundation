@@ -21,7 +21,7 @@ trait OperationTrait
 
         $collectionClass = $repository->getCollectionClass();
         $collection = new $collectionClass($list, $scene, $repository, $simpleResult);
-        return $collection->toResponse();
+        return $collection->toResponse($this->request);
         //$list = $repository->all();//null, $params, (int) $pageSize);
         //$list = $repository->getByCriteria($criteria)->all();
         return $this->success($datas);

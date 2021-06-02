@@ -6,21 +6,6 @@ namespace Swoolecan\Foundation\Models;
 
 trait TraitModel
 {
-
-    public function getColumnElems($type = 'keyValue')
-    {
-        $results = $this->getConnection()->getSchemaBuilder()->getColumnTypeListing($this->getTable());
-        $datas = [];
-        if ($type == 'keyValue') {
-            $datas = [];
-            foreach ($results as $result) {
-                $datas[$result['column_name']] = empty($result['column_comment']) ? $result['column_name'] : $result['column_comment'];
-            }
-            return $datas;
-        }
-        return $results;
-    }
-
     /**
      * Get the table associated with the model.
      *

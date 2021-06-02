@@ -3,6 +3,7 @@
 declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Repositories;
+
 use Hyperf\Cache\Annotation\CachePut;
 use Hyperf\Cache\Annotation\Cacheable;
 

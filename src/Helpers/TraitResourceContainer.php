@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Helpers;
@@ -6,9 +7,8 @@ namespace Swoolecan\Foundation\Helpers;
 /**
  * 系统资源
  */
-trait TraitResourceManager
+trait TraitResourceContainer
 {
-
     protected $resources;
     protected $objects = [];
     public $appCode;
@@ -28,6 +28,9 @@ trait TraitResourceManager
         }
         $code = $elems[2];
         $type = $elems[1];
+        $module = $elems[0];
+        $module = str_replace('Module', '', $module);
+        $module = lcfirst($module);
 
         $type = $this->strOperation($type, 'singular');//Str::singular($type);
 
@@ -37,7 +40,7 @@ trait TraitResourceManager
         }
         //$code = $this->strOperation($code, 'snake', '-');//Str::snake($code, '-');
         $code = lcfirst($code);
-        return $code;
+        return $module . '-' . $code;
     }
 
     public function getObject($type, $code, $params = [])

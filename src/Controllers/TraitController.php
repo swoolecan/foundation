@@ -32,4 +32,16 @@ trait TraitController
     {
         return $repository->getDealSearchFields($scene, $params);
     }
+
+    public function getRepositoryObj($code = '', $params = [])
+    {
+        $code = !empty($code) ? $code : get_called_class();
+        return $this->resource->getObject('repository', $code, $params);
+    }
+
+    public function getServiceObj($code = '', $params = [])
+    {
+        $code = !empty($code) ? $code : get_called_class();
+        return $this->resource->getObject('service', $code, $params);
+    }
 }

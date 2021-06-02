@@ -36,4 +36,14 @@ trait TraitRepository
     {   
         return $this->model->{$name}(...$arguments);
     }
+
+    public function getCollectionClass($code = null)
+    {
+        return $this->resource->getClassName('collection', $code ? $code : get_called_class());
+    }
+
+    public function getResourceClass($code = null)
+    {
+        return $this->resource->getClassName('resource', $code ? $code : get_called_class());
+    }
 }
