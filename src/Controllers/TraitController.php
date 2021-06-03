@@ -35,13 +35,27 @@ trait TraitController
 
     public function getRepositoryObj($code = '', $params = [])
     {
-        $code = !empty($code) ? $code : get_called_class();
-        return $this->resource->getObject('repository', $code, $params);
+        return $this->getObject('repository', $code, $params);
     }
 
     public function getServiceObj($code = '', $params = [])
     {
-        $code = !empty($code) ? $code : get_called_class();
-        return $this->resource->getObject('service', $code, $params);
+        return $this->getObject('service', $code, $params);
+    }
+
+    public function getServiceRepo($code = '', $params = [])
+    {
+        return $this->getObject('service-repo', $code, $params);
+    }
+
+    protected function getObject($type, $code, $params)
+    {
+        $code = !empty($code) ? $this->getAppcode() . '-' . $code : get_called_class();
+        return $this->resource->getObject($type, $code, $params);
+    }
+
+    protected function getAppcode()
+    {
+        return '';
     }
 }

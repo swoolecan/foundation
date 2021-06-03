@@ -51,7 +51,7 @@ trait TraitResourceContainer
         }
 
         if (isset($this->objects[$class])) {
-            return $this->objects[$class];
+            //return $this->objects[$class];
         }
         $obj = $this->getObjectByClass($class);
         if (method_exists($obj, 'init')) {
@@ -96,10 +96,11 @@ trait TraitResourceContainer
         $routes = $this->_routeDatas('routes');
         //$routes = $this->config->get('routes');
         //print_r($routes);
-        if (!$routes || !isset($routes[$this->appCode])) {
-            $this->throwException(500, '路由信息不存在-' . $this->appCode);
+        if (!$routes || !isset($routes[$this->getAppcode()])) {
+            $this->throwException(500, '路由信息不存在-' . $this->getAppcode());
         }
-        return $routes[$this->appCode];
+
+        return $routes[$this->getAppcode()];
     }
 
     public function formatClass($elem, $code)
@@ -115,7 +116,7 @@ trait TraitResourceContainer
         return $class;
     }
 
-    public function strOperation($string, $operation)
+    public function strOperation($string, $operation, $params = [])
     {
         return $string;
     }

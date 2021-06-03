@@ -27,8 +27,13 @@ trait TraitService
 
     public function getRepositoryObj($code = '', $params = [])
     {
-        $code = !empty($code) ? $code : get_called_class();
-        return $this->resource->getObject('repository', $code);
+        return $this->getObject('repository', $code, $params);
+    }
+
+    protected function getObject($type, $code, $params)
+    {
+        $code = !empty($code) ? $this->getAppcode() . '-' . $code : get_called_class();
+        return $this->resource->getObject($type, $code, $params);
     }
 
     /*protected function _writeLog($return, $mobile, $content, $sort, $startTime)
