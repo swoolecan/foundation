@@ -6,7 +6,6 @@ namespace Swoolecan\Foundation\Models;
 
 trait TraitModel
 {
-    protected $dateFormat = 'Y-m-d H:i:s';
     public static $status = [
         0 => '禁用',
         1 => '正常'
