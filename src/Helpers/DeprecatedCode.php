@@ -10,7 +10,7 @@ use EasyWeChat\Factory;
 /**
  * 系统操作相关功能
  */
-Class SysOperation
+Class DeprecatedCode
 {
     /**
      * init resources
@@ -252,5 +252,25 @@ Class SysOperation
             return [];
         }
         return require($cacheFile);
+    }
+
+    protected function _writeLog($return, $mobile, $content, $sort, $startTime)
+    {
+        $endTime = microtime(true);
+        $timeUsed = number_format($endTime - $startTime, 3);
+        $currentDate = date('Y-m-d H:i:s');
+        $content = "==={$mobile}==={$currentDate}===\r\n"
+            . "---{$timeUsed}---{$return['message']}---{$return['extinfo']}---\r\n"
+            . "---{$content}---\r\n\r\n";
+
+        $logFile = \Yii::getAlias('@runtime') . '/logs/sms/' . date('Y-m-d') . '/' . $sort;
+        $logFile .= $return['status'] ? '_success.log' : '_error.log';
+        $path = dirname($logFile);
+        if (!is_dir($path)) {
+            \yii\helpers\FileHelper::createDirectory($path);
+        }
+        file_put_contents($logFile, $content, FILE_APPEND);
+
+        return true;
     }
 }

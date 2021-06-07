@@ -6,14 +6,20 @@ namespace Swoolecan\Foundation\Models;
 
 trait TraitModel
 {
-    /**
-     * Get the table associated with the model.
-     *
-     * @return string
-     */
-    public function getTable()
+    protected $dateFormat = 'Y-m-d H:i:s';
+    public static $status = [
+        0 => '禁用',
+        1 => '正常'
+    ];
+    
+    public function getPointModel($code)
     {
-        return $this->table ?? Str::snake(class_basename($this));
+        return $this->resource->getObject('model', $code);
+    }
+
+    function getFormatState($key = 0, $enum = array(), $default = '')
+    {
+        return array_key_exists($key, $enum) ? $enum[$key] : $default;
     }
 
     public function getParentField($keyField = 'id')
@@ -39,5 +45,59 @@ trait TraitModel
     public function canDelete()
     {
         return true;
+    }
+
+    /*protected $attributes = [
+        'status' => 1,
+    ];
+
+    public function getStatusTextAttribute()
+    {
+        return $this->attributes['status_text'] = $this->getFormatState($this->attributes['status'], self::$status);
+    }*/
+
+    /*public function getList(array $params, int $pageSize)
+    {
+        $params = [
+            'sort_name' => 'id',
+            'sort_value' => 'desc',
+        ];
+        $list = $this->query()->orderBy($params['sort_name'], $params['sort_value'])->paginate($pageSize);
+        foreach ($list as &$value) {
+            $value->sex_text;
+            $value->status_text;
+        }
+        return $list;
+    }*/
+
+    public function fieldTypes()
+    {
+        return [
+            'created_at' => 'timestamp',
+            'updated_at' => 'timestamp',
+            'last_at' => 'timestamp',
+            'status' => 'checkbox',
+            'type' => 'dropdown',
+        ];
+    }
+
+    public function getLevelInfos($level, $parentValue = null, $datas = [])
+    {
+        if (empty($level)) {
+            return $datas;
+        }
+
+        $keyField = $this->getKeyName();
+        $parentField = $this->getParentField($keyField);
+        $parentValue = is_null($parentValue) ? $this->getParentFirstValue($keyField) : $parentValue;
+        $infos = $this->where($parentField, $parentValue)->get();
+        $datas = array_merge($datas, (array) $infos);
+        if ($level) {
+            foreach ($infos as $info) {
+                $datas = $this->getLevelInfos($level - 1, $info[$parentField], $datas);
+            }
+
+        }
+        return $datas;
     }
 }

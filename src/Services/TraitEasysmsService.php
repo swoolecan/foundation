@@ -4,8 +4,6 @@ declare(strict_types = 1);
 namespace Swoolecan\Foundation\Services;
 
 use Overtrue\EasySms\EasySms;
-//use Hyperf\Cache\Annotation\Cacheable;
-//use Hyperf\Cache\Annotation\CachePut;
 //use Framework\Baseapp\Helpers\SysOperation;
 
 trait TraitEasysmsService
@@ -137,22 +135,6 @@ trait TraitEasysmsService
             'sendTimes' => isset($infoExist['sendTimes']) ? $infoExist['sendTimes'] + 1 : 1,
             //'count' => 0,
         ];
-    }
-
-    /**
-     * @CachePut(prefix="sms-", group="filesys")
-     */
-    protected function cacheCode($key)
-    {
-        return $this->createInfo;
-    }
-
-    /**
-     * @Cacheable(prefix="sms-", group="filesys")
-     */
-    protected function getCodeInfo($key)
-    {
-        return null;
     }
 
     protected function checkSend($info, $typeConfig)

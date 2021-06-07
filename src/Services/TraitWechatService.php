@@ -4,7 +4,6 @@ namespace App\Services;
 
 //use Illuminate\Support\Facades\Cache;
 use EasyWeChat\Factory;
-//use Illuminate\Support\Str;
 
 trait TraitWechatService
 {
@@ -86,98 +85,6 @@ trait TraitWechatService
         return $data;
     }
 
-    /**
-     * 生成签名
-     * @param $url
-     * @return array|bool
-     * @throws \EasyWeChat\Kernel\Exceptions\HttpException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
-     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     */
-    public function signature($url){
-
-        $jsapiTicket = $this->jsapiTicket();
-        if (!$jsapiTicket) {
-            return false;
-        }
-
-        $appId = config('app.wechat_app_id');
-        $noncestr = Str::random(16);;
-        $timestamp = time();
-        $sha1sStr = "jsapi_ticket=$jsapiTicket&noncestr=$noncestr&timestamp=$timestamp&url=$url";
-        $signature = sha1($sha1sStr);
-
-        $config = [];
-        $config['app_id'] = $appId;
-        $config['timestamp'] = $timestamp;
-        $config['noncestr'] = $noncestr;
-        $config['signature'] = $signature;
-        $config['jsapiTicket'] = $jsapiTicket;
-        $config['url'] = $url;
-        return $config;
-    }
-    /**
-     * 获取jsapi_TICKET
-     * @param $code
-     * @return bool
-     * @throws \EasyWeChat\Kernel\Exceptions\HttpException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
-     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     */
-    public function jsapiTicket(){
-        //获取token
-        $accessToken = false;
-        $token = Cache::get('wx_token_score');
-        if ($token && $token['extend'] > time()) {
-            $accessToken  = $token['value'];
-        } else {
-            $appId = config('app.wechat_app_id');
-            $secret = config('app.wechat_app_secret');
-            $accessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appId&secret=$secret";
-            $result = json_decode(file_get_contents($accessTokenUrl));
-            if($result->access_token){
-                $dataTocken = [];
-                $dataTocken['value'] = $result->access_token;
-                $dataTocken['extend'] = time() + 7000;
-                Cache::put('wx_token_score',$dataTocken,7200);
-                $accessToken = $result->access_token;
-            }
-
-        }
-
-        $jsapiTicket = false;
-        $ticket = Cache::get('wx_ticket_score');
-
-        if ($ticket && $ticket['extend'] > time()) {
-            $jsapiTicket = $ticket['value'];
-        } else {
-            //获取SDK_TICKET
-            $guzzle = new GuzzleServe();
-            $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$accessToken."&type=jsapi";
-            $res = $guzzle->curl($url);
-            $res = json_decode($res, true);
-
-            //存储
-            try {
-                if ($res['errcode'] == 0) {
-                    $data = [];
-                    $data['value'] = $res['ticket'];
-                    $data['extend'] = time() + 7000;
-                    Cache::put('wx_ticket_score',$data,7200);
-                    $jsapiTicket = $res['ticket'];
-                }
-            } catch (\Exception $exception) {
-
-            }
-
-        }
-        return $jsapiTicket;
-    }
-
     public function getWechatUser($wechat = null)
     {
         $wechat = is_null($wechat) ? $this->getWechatServe('official') : $wechat;
@@ -244,7 +151,7 @@ trait TraitWechatService
         var_dump($r);
     }
 
-    public function sendDingNotice($title, $content, $url)
+    /*public function sendDingNotice($title, $content, $url)
     {
         $ding = new \DingNotice\DingTalk(config('ding'));
         $r = $ding->link($title, $content, $url);
@@ -259,5 +166,5 @@ trait TraitWechatService
             return $app->qrcode->temporary($text, $ttl);
         });
         return $result ? $app->qrcode->url($result['ticket']) : '';
-    }
+    }*/
 }

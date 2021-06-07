@@ -13,9 +13,6 @@ trait TraitRepository
     use ShowFieldTrait;
     use TreeTrait;
 
-    protected $newModel;
-    protected $pointModel;
-
     /**
      * @var query
      */

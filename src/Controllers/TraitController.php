@@ -54,6 +54,16 @@ trait TraitController
         return $this->resource->getObject($type, $code, $params);
     }
 
+    public function getVersion()
+    {
+        return $this->request->header('version');
+    }
+
+    public function getRouteParam($param)
+    {
+        return $this->resource->getRouteParam($param);
+    }
+
     protected function getAppcode()
     {
         return '';
