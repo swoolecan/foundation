@@ -81,7 +81,7 @@ trait TraitResourceContainer
 
     public function getIp()
     {
-        $ip = $this->request->getHeader('x-real-ip');
+        $ip = $this->request->header('x-real-ip');
         if (empty($ip)) {
             return '';
         }
