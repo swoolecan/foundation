@@ -3,9 +3,11 @@
 declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Repositories;
+use Swoolecan\Foundation\Helpers\TraitResourceManager;
 
 trait TraitRepository
 {
+    use TraitResourceManager;
     use DataTrait;
     use FieldTrait;
     use FormFieldTrait;

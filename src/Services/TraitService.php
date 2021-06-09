@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Services;
 
+use Swoolecan\Foundation\Helpers\TraitResourceManager;
+
 trait TraitService
 {
+    use TraitResourceManager;
     public function init()
     {
         if (!empty($this->pointRepository())) {
@@ -21,16 +24,5 @@ trait TraitService
     public function __call($name, $arguments)
     {   
         return $this->repository->{$name}(...$arguments);
-    }
-
-    public function getRepositoryObj($code = '', $params = [])
-    {
-        return $this->getObject('repository', $code, $params);
-    }
-
-    protected function getObject($type, $code, $params)
-    {
-        $code = !empty($code) ? $this->getAppcode() . '-' . $code : get_called_class();
-        return $this->resource->getObject($type, $code, $params);
     }
 }

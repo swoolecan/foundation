@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Models;
 
+use Swoolecan\Foundation\Helpers\TraitResourceManager;
+
 trait TraitModel
 {
+    use TraitResourceManager;
     public static $status = [
         0 => '禁用',
         1 => '正常'

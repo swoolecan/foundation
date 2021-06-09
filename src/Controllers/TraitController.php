@@ -4,9 +4,12 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Controllers;
 
+use Swoolecan\Foundation\Helpers\TraitResourceManager;
+
 trait TraitController
 {
     use OperationTrait;
+    use TraitResourceManager;
 
     public function getRequestObj($scene = '', $repository = null, $code = '')
     {
@@ -31,27 +34,6 @@ trait TraitController
     public function dealCriteria($scene, $repository, $params)
     {
         return $repository->getDealSearchFields($scene, $params);
-    }
-
-    public function getRepositoryObj($code = '', $params = [])
-    {
-        return $this->getObject('repository', $code, $params);
-    }
-
-    public function getServiceObj($code = '', $params = [])
-    {
-        return $this->getObject('service', $code, $params);
-    }
-
-    public function getServiceRepo($code = '', $params = [])
-    {
-        return $this->getObject('service-repo', $code, $params);
-    }
-
-    protected function getObject($type, $code, $params)
-    {
-        $code = !empty($code) ? $this->getAppcode() . '-' . $code : get_called_class();
-        return $this->resource->getObject($type, $code, $params);
     }
 
     public function getVersion()

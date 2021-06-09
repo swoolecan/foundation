@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Swoolecan\Foundation\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;

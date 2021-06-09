@@ -103,12 +103,13 @@ trait TraitResourceContainer
         return $routes[$this->getAppcode()];
     }
 
-    public function formatClass($elem, $code)
+    public function formatClass($elem, $code, $app = 'app')
     {
         $codeUpper = $this->strOperation($code, 'studly');//Str::studly($code);
         $elemUpper = $this->strOperation($elem, 'studly');//Str::studly($elem);
         $elemPath = $elem == 'repository' ? 'Repositories' : ($elem == 'collection' ? 'Resources' : "{$elemUpper}s");
-        $class = "App\\{$elemPath}\\{$codeUpper}";
+        $app = $app != 'app' ? 'Module' . ucfirst($app) : 'App';
+        $class = "{$app}\\{$elemPath}\\{$codeUpper}";
 
         if (!in_array($elem, ['model', 'resource'])) {
             $class .= "{$elemUpper}";
