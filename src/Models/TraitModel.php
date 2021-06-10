@@ -16,10 +16,18 @@ trait TraitModel
     
     public function getPointModel($code)
     {
-        return $this->resource->getObject('model', $code);
+        if (empty($this->resource)) {
+            $this->resource = $this->getResource();
+        }
+        return $this->getModelObj($code);
     }
 
-    function getFormatState($key = 0, $enum = array(), $default = '')
+    protected function getResource()
+    {
+        return $this->resource;
+    }
+
+    public function getFormatState($key = 0, $enum = array(), $default = '')
     {
         return array_key_exists($key, $enum) ? $enum[$key] : $default;
     }
