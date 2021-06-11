@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Helpers;
 
+use Swoolecan\Foundation\Helpers\AgentTool;
+
 /**
  * 系统资源
  */
@@ -121,4 +123,14 @@ trait TraitResourceContainer
     {
         return $string;
     }
+
+    public function getPointDomain($code = '')
+    {
+        return '';
+    }
+
+	public function isMobile()
+	{
+		return AgentTool::isMobile();
+	}
 }
