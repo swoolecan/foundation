@@ -31,4 +31,9 @@ trait TraitResourceManager
         $code = !empty($code) ? $this->getAppcode() . '-' . $code : get_called_class();
         return $this->resource->getObject($type, $code, $params);
     }
+
+    protected function getAppcode()
+    {
+        return 'passport';
+    }
 }

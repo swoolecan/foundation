@@ -9,10 +9,11 @@ use Swoolecan\Foundation\Helpers\TraitResourceManager;
 trait TraitService
 {
     use TraitResourceManager;
+
     public function init()
     {
         if (!empty($this->pointRepository())) {
-            $this->repository = $this->resource->getObject('repository', $this->pointRepository());
+            $this->repository = $this->getRepositoryObj($this->pointRepository());
         }
     }
 

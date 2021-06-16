@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Swoolecan\Foundation\Services;
 
 use Overtrue\EasySms\EasySms;
-//use Framework\Baseapp\Helpers\SysOperation;
 
 trait TraitEasysmsService
 {
@@ -45,7 +44,7 @@ trait TraitEasysmsService
         return $this->_send($mobile, $template, $data);
     }
 
-    protected function _send($mobile, $content)
+    protected function _send($mobile, $template, $data)
     {
         if ($this->getConfig('isTest')) {
             return ['code' => 200, 'message' => 'success1'];
@@ -56,7 +55,7 @@ trait TraitEasysmsService
             $easySms = new EasySms($this->getConfig());
             $easySms->send($mobile, $content);
         } catch (\Exception $e) {
-            return $this->throwException(400, '短信发送失败，请稍后重新操作0');
+            return $this->resource->throwException(400, '短信发送失败，请稍后重新操作0');
         }
         return ['code' => 200, 'message' => 'success'];
     }
@@ -69,7 +68,7 @@ trait TraitEasysmsService
         $type = $data['type'];
         $typeConfig = $this->getConfig('verifyCode', $type);
         if (empty($typeConfig)) {
-            return $this->throwException(400, "验证码类型{$type}有误");
+            return $this->resource->throwException(400, "验证码类型{$type}有误");
         }
         $infoExist = $this->getCodeInfo($mobile . '-' . $type);
         $check = $this->checkSend($infoExist, $typeConfig);
@@ -90,23 +89,22 @@ trait TraitEasysmsService
 
 	public function validateCode($data)
 	{
-        return ['code' => 200, 'message' => 'success'];
         $type = $data['type'];
         $typeConfig = $this->getConfig('verifyCode', $type);
         $info = $this->getCodeInfo($data['mobile'] . '-' . $type);
 
 		if (empty($info)) {
-			return $this->throwException(400, '没有向该手机号发送验证码，请重新操作');
+			return $this->resource->throwException(400, '没有向该手机号发送验证码，请重新操作');
 		}
 
 		if ($info['code'] != $data['code']) {
 			$message = $this->getConfig('isTest') ? 'codeError-' . $info['code'] : '验证码错误';
-			return $this->throwException(400, $message);
+			return $this->resource->throwException(400, $message);
 		}
 
         $expire = isset($typeConfig['expire']) ? $typeConfig['expire'] : 300;
         if (time() > $info['updatedAt'] + $expire) {
-			return $this->throwException(400, '您的验证码已经过期，请重新获取');
+			return $this->resource->throwException(400, '您的验证码已经过期，请重新获取');
         }
         return ['code' => 200, 'message' => 'success'];
 	}
@@ -145,14 +143,14 @@ trait TraitEasysmsService
 
         $sendTimes = isset($typeConfig['sendTimes']) ? $typeConfig['sendTimes'] : 5;
         if ($info['sendTimes'] > $sendTimes) {
-            return $this->throwException(400, '您今天获取验证的次数已达到上限，请您暂停再操作');
+            return $this->resource->throwException(400, '您今天获取验证的次数已达到上限，请您暂停再操作');
         }
 
         $sleep = isset($typeConfig['sleep']) ? $typeConfig['sleep'] : 60;
         $diff = time() - $info['updatedAt'];
         if ($diff < $sleep) {
             $remain = $sleep - $diff;
-            return $this->throwException(400, "请您{$remain}秒后，再获取验证码");
+            return $this->resource->throwException(400, "请您{$remain}秒后，再获取验证码");
         }
 
         return true;
@@ -162,10 +160,10 @@ trait TraitEasysmsService
     {
         static $templates;
         if (is_null($templates)) {
-            $templates = SysOperation::getCacheElems('easysms');
+            $templates = $this->config->get('sms');
         }
         if (!isset($templates[$templateCode])) {
-            return $this->throwException(400, "短信模板{$templateCode}有误");
+            return $this->resource->throwException(400, "短信模板{$templateCode}有误");
         }
         $template = $templates[$templateCode];
         $template['templateCode'] = $templateCode;
