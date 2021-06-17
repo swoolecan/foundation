@@ -16,14 +16,14 @@ trait TraitController
         //$type = empty($action) ? 'request' : 'request-' . $action;
         $code = !empty($code) ? $code : get_called_class();
         //$request = $this->resource->getObject($type, $code, false);
-        $request = $this->resource->getObject('request', $code, false);
+        $request = $this->resource->getObject('request', $code, ['scene' => $scene]);
+        $request->setScene($scene);
         if (empty($request)) {
             return $this->request;
         }
         if ($repository) {
             $request->setRepository($repository);
         }
-        $request->setScene($scene);
 
         if (method_exists($request, 'validateResolved')) {
             $request->validateResolved();

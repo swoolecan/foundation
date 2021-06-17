@@ -55,7 +55,7 @@ trait TraitResourceContainer
         if (isset($this->objects[$class])) {
             //return $this->objects[$class];
         }
-        $obj = $this->getObjectByClass($class);
+        $obj = $this->getObjectByClass($class, ['params' => $params]);
         if (method_exists($obj, 'init')) {
             $obj->init($params);
         }
