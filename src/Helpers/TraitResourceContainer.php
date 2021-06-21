@@ -28,13 +28,17 @@ trait TraitResourceContainer
         if ($count < 3) {
             return $class;
         }
-        $code = $elems[2];
-        $type = $elems[1];
-        $module = $elems[0];
-        $module = str_replace('Module', '', $module);
+        $code = array_pop($elems);
+        if ($elems[0] == 'App' && $elems['1'] == 'Http') {
+            $type = count($elems) == 3 ? $elems[2] : $elems[3];
+            $module = count($elems) == 3 ? 'App' : array_pop($elems);
+        } else {
+            $type = array_pop($elems);
+            $module = $elems[0];
+            $module = str_replace('Module', '', $module);
+        }
         $module = lcfirst($module);
-
-        $type = $this->strOperation($type, 'singular');//Str::singular($type);
+        $type = $this->strOperation($type, 'singular');
 
         $pos = strripos($code, $type);
         if ($pos !== false) {

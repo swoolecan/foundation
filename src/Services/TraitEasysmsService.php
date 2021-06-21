@@ -55,7 +55,7 @@ trait TraitEasysmsService
             $easySms = new EasySms($this->getConfig());
             $easySms->send($mobile, $content);
         } catch (\Exception $e) {
-            return $this->resource->throwException(400, '短信发送失败，请稍后重新操作0');
+            return $this->resource->throwException(400, '短信发送失败，请稍后重新操作0' . $e->getMessage());
         }
         return ['code' => 200, 'message' => 'success'];
     }
