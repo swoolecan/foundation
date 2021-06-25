@@ -11,12 +11,12 @@ trait TraitController
     use OperationTrait;
     use TraitResourceManager;
 
-    public function getRequestObj($scene = '', $repository = null, $code = '')
+    public function getPointRequest($scene = '', $repository = null, $code = '')
     {
         //$type = empty($action) ? 'request' : 'request-' . $action;
         $code = !empty($code) ? $code : get_called_class();
         //$request = $this->resource->getObject($type, $code, false);
-        $request = $this->resource->getObject('request', $code, ['scene' => $scene, 'repository' => $repository]);
+        $request = $this->getRequestObj(null, ['scene' => $scene, 'repository' => $repository]);
         //$request->setScene($scene);
         if (empty($request)) {
             return $this->request;

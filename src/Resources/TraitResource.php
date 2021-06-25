@@ -10,12 +10,12 @@ trait TraitResource
     protected $_simpleResult;
     public $preserveKeys = true;
 
-    public function __construct($resource, $scene = '', $repository = null, $simpleResult = false)
+    public function __construct($params = [])//$resource, $scene, $repository, $simpleResult = false)
     {
-        $this->setScene($scene);
-        $this->_repository = $repository;
-        $this->_simpleResult = $simpleResult;
-        parent::__construct($resource);
+        $this->setScene($params['scene']);
+        $this->_repository = $params['repository'] ?? null;
+        $this->_simpleResult = $params['simpleResult'] ?? false;
+        parent::__construct($params['resource']);
     }
 
     /**

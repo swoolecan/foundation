@@ -1,12 +1,17 @@
 <?php
 
-namespace App\Services;
+namespace Swoolecan\Foundation\Services;
 
 //use Illuminate\Support\Facades\Cache;
 use EasyWeChat\Factory;
 
 trait TraitWechatService
 {
+    protected function pointRepository()
+    {
+        return false;
+    }
+
     public function getWechatServe($type, $code = '')
     {
         $code = empty($code) ? 'default' : $code;

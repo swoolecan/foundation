@@ -6,6 +6,11 @@ trait TraitRedisService
 {
     protected $redis;
 
+    protected function pointRepository()
+    {
+        return false;
+    }
+
     public function set($key, $value)
     {
         $value = is_array($value) ? serialize($value) : $value;
@@ -38,6 +43,42 @@ trait TraitRedisService
         $redis->setex($key , $duration, $value); // setex 存放带存储时效的记录 存储key为library,值为phpredis的记录，有效时长为10秒
     }
 
+    public function exists($key)
+    {
+        return $this->redis->exists($key); //exists 检测是否存在  存在返回1 否则返回0
+    }
+
+    public function del($key)
+    {
+        return $this->redis->del($key);
+    }
+
+    public function lpush($key, $datas)
+    {
+        if (is_array($datas)) {
+            return $this->redis->lpush($key, ...$datas);
+        }
+        return $this->redis->lpush($key, $datas);
+    }
+
+    public function llen($key)
+    {
+        return $this->redis->llen($key); //返回 3
+    }
+
+    // lrange 返回队列中一个区间的元素
+    public function lrange($key, $start, $end, $isArray = false)
+    {
+        $datas = $this->redis->lrange($key, $start, $end); //返回数组包含第0个至第1个，共2个元素
+        if (empty($isArray)){
+            return $datas;
+        }
+        foreach ($datas as $key => & $data) {
+            $data = unserialize($data);
+        }
+        return $datas;
+        //$redis->lrange('foolist' , 0 , -1);//返回第0个至倒数第一个，相当于返回所有元素  
+    }
 }
 
 /**
@@ -94,11 +135,6 @@ $redis->dbsize();
 $redis->rpush('foolist' , 'bar1'); //返回列表长度1
 $redis->rpush('foolist' , 'bar0'); // 返回列表长度2
 $redis->rpushx('foolist' , 'bar2'); // 返回3 ， rpushx只对已存在的队列做添加，否则返回0
-$redis->llen('foolist'); //返回 3
-
-// lrange 返回队列中一个区间的元素
-$redis->lrange('foolist' , 0 , 1); //返回数组包含第0个至第1个，共2个元素
-$redis->lrange('foolist' , 0 , -1);//返回第0个至倒数第一个，相当于返回所有元素  
 
 //lindex 返回指定顺序位置的list元素
 $redis->lindex('foolist' , 1); //返回bar1

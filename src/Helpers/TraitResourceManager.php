@@ -16,6 +16,11 @@ trait TraitResourceManager
         return $this->getObject('service', $code, $params);
     }
 
+    public function getRequestObj($code = '', $params = [])
+    {
+        return $this->getObject('request', $code, $params);
+    }
+
     public function getServiceRepo($code = '', $params = [])
     {
         return $this->getObject('service-repo', $code, $params);
@@ -24,6 +29,16 @@ trait TraitResourceManager
     public function getModelObj($code = '', $params = [])
     {
         return $this->getObject('model', $code, $params);
+    }
+
+    public function getResourceObj($code = '', $params = [])
+    {
+        return $this->getObject('resource', $code, $params);
+    }
+
+    public function getCollectionObj($code = '', $params = [])
+    {
+        return $this->getObject('collection', $code, $params);
     }
 
     protected function getObject($type, $code, $params)

@@ -17,12 +17,12 @@ trait TraitCollection
      *
      * @param mixed $resource
      */
-    public function __construct($resource, $scene, $repository, $simpleResult = false)
+    public function __construct($params = [])//$resource, $scene, $repository, $simpleResult = false)
     {
-        $this->setScene($scene);
-        $this->repository = $repository;
-        $this->simpleResult = $simpleResult;
-        parent::__construct($resource);
+        $this->setScene($params['scene']);
+        $this->repository = $params['repository'];
+        $this->simpleResult = $params['simpleResult'];
+        parent::__construct($params['resource']);
     }
 
     /**
