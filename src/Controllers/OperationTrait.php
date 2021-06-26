@@ -21,7 +21,7 @@ trait OperationTrait
 
         //$collectionClass = $repository->getCollectionClass();
         //$collection = new $collectionClass($list, $scene, $repository, $simpleResult);
-        $collection = $this->getCollectionObj(null, ['list' => $list, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
+        $collection = $this->getCollectionObj(null, ['resource' => $list, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
         return $collection->toResponse($this->request);
         //$list = $repository->all();//null, $params, (int) $pageSize);
         //$list = $repository->getByCriteria($criteria)->all();
@@ -38,7 +38,7 @@ trait OperationTrait
     public function add()
     {
         $repository = $this->getRepositoryObj();
-        $request = $this->getRequestObj('add', $repository);
+        $request = $this->getPointRequest('add', $repository);
         $scene = $request->input('point_scene');
         if ($scene == 'get_formelem') {
             return $this->success(['formFields' => $repository->getFormatFormFields('add'), 'fieldNames' => $repository->getAttributeNames('add')]);
@@ -51,7 +51,7 @@ trait OperationTrait
     public function update()
     {
         $repository = $this->getRepositoryObj();
-        $request = $this->getRequestObj('update', $repository);
+        $request = $this->getPointRequest('update', $repository);
         $scene = $request->input('point_scene');
         if ($scene == 'get_formelem') {
             return $this->success($repository->getFormatFormFields('add'));
@@ -70,7 +70,7 @@ trait OperationTrait
     public function view()
     {
         $repository = $this->getRepositoryObj();
-        $request = $this->getRequestObj('', $repository);
+        $request = $this->getPointRequest('', $repository);
         $params = $request->all();
         $info = $this->getPointInfo($repository, $request);
 
@@ -78,8 +78,8 @@ trait OperationTrait
         $simpleResult = $params['simple_result'] ?? false;
         //$resourceClass = $repository->getResourceClass();
         //$resource = new $resourceClass($info, $scene, $repository, $simpleResult);
-        $resource = $this->getResourceObj(null, ['info' => $info, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
-        return $resource->toResponse();
+        $resource = $this->getResourceObj(null, ['resource' => $info, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
+        return $resource->toResponse($request);
 
         //$result->permissions;
         return $this->success($info);
@@ -88,7 +88,7 @@ trait OperationTrait
     public function delete()
     {
         $repository = $this->getRepositoryObj();
-        $request = $this->getRequestObj('', $repository);
+        $request = $this->getPointRequest('', $repository);
         $info = $this->getPointInfo($repository, $request, false);
 
         $number = 0;
@@ -129,7 +129,7 @@ trait OperationTrait
             return $throw ? $this->throwException(404, '信息不存在') : false;
         }
 
-        $limitPriv = $request->getAttribute('limitPriv');
+        $limitPriv = $request->get('limitPriv');
         if ($limitPriv) {
             $priv = $info->checkLimitPriv($limitPriv);
             if (empty($priv)) {

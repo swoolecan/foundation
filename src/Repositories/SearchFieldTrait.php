@@ -13,7 +13,7 @@ trait SearchFieldTrait
 
         $sortElem = !isset($params['sort_elem']) || empty($param['sort_elem']) ? false : json_decode($params['sort_elem'], true);
         if (!empty($sortElem)) {
-            $criteriaClass = '\Swoolecan\Foundation\Criteria\SortCriteria';
+            $criteriaClass = '\Framework\Baseapp\Criteria\SortCriteria';
             $this->pushCriteria(new $criteriaClass($sortElem));
         }
 
@@ -39,7 +39,7 @@ trait SearchFieldTrait
             $type = $data['type'] ?? 'common';
             $type = ucfirst($type);
 
-            $criteriaClass = "\Swoolecan\Foundation\Criteria\\{$type}Criteria";
+            $criteriaClass = "\Framework\Baseapp\Criteria\\{$type}Criteria";
             $this->pushCriteria(new $criteriaClass($data));
             //$repository->pushCriteria($criteria);
         }

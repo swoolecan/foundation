@@ -90,10 +90,9 @@ trait DataTrait
 
     public function getPointKeyValues($resource = null, $where = [], $scene = 'keyvalue')
     {
-        $repository = is_null($resource) ? $this : $this->resource->getObject('repository', $resource);
+        $repository = is_null($resource) ? $this : $this->getRepositoryObj($resource);
         $datas = $repository->findWhere($where);
-        $collectionClass = $repository->getCollectionClass();
-        $collection = new $collectionClass($datas, $scene, $repository);
+        $collection = $this->getCollectionObj(null, ['resource' => $datas, 'scene' => $scene, 'repository' => $repository]);
         return $collection->toArray();
     }
 }

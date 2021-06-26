@@ -21,7 +21,7 @@ trait TraitCollection
     {
         $this->setScene($params['scene']);
         $this->repository = $params['repository'];
-        $this->simpleResult = $params['simpleResult'];
+        $this->simpleResult = $params['simpleResult'] ?? false;
         parent::__construct($params['resource']);
     }
 
@@ -121,7 +121,7 @@ trait TraitCollection
     public function getModel()
     {
         if (empty($this->_model)) {
-            $this->_model = $this->repository->getModel();
+            $this->_model = $this->repository->getModelObj();
         }
         return $this->_model;
         //return $this->_model ?? $this->collection->first();
