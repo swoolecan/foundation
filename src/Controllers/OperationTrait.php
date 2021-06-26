@@ -4,7 +4,7 @@ namespace Swoolecan\Foundation\Controllers;
 
 trait OperationTrait
 {
-    public function listinfo()
+    public function listinfoGeneral()
     {
         $params = $this->request->all();
         $scene = $params['point_scene'] ?? 'list';
@@ -35,7 +35,7 @@ trait OperationTrait
         return $this->success($repository->getTreeLists());
     }
 
-    public function add()
+    public function addGeneral()
     {
         $repository = $this->getRepositoryObj();
         $request = $this->getPointRequest('add', $repository);
@@ -48,7 +48,7 @@ trait OperationTrait
         return $this->success($result);
     }
 
-    public function update()
+    public function updateGeneral()
     {
         $repository = $this->getRepositoryObj();
         $request = $this->getPointRequest('update', $repository);
@@ -67,7 +67,7 @@ trait OperationTrait
         return $this->success([]);
     }
 
-    public function view()
+    public function viewGeneral()
     {
         $repository = $this->getRepositoryObj();
         $request = $this->getPointRequest('', $repository);
@@ -85,7 +85,7 @@ trait OperationTrait
         return $this->success($info);
     }
 
-    public function delete()
+    public function deleteGeneral()
     {
         $repository = $this->getRepositoryObj();
         $request = $this->getPointRequest('', $repository);

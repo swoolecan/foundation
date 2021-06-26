@@ -10,7 +10,7 @@ trait TraitResource
     protected $_simpleResult;
     public $preserveKeys = true;
 
-    public function __construct($resource = null, $params)//$scene, $repository, $simpleResult = false)
+    public function __construct($resource = null, $params = [])//$scene, $repository, $simpleResult = false)
     {
         $this->setScene($params['scene'] ?? '');
         $this->_repository = $params['repository'] ?? null;
@@ -19,12 +19,7 @@ trait TraitResource
         parent::__construct($resource);
     }
 
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array
-     */
-    public function toArray($request = null): array
+    public function _toArray($request = null)
     {
         $scene = $this->getScene();
         $method = "_{$scene}Array";
