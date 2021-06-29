@@ -14,19 +14,6 @@ trait TraitModel
         1 => '正常'
     ];
     
-    public function getPointModel($code)
-    {
-        if (empty($this->resource)) {
-            $this->resource = $this->getResource();
-        }
-        return $this->getModelObj($code);
-    }
-
-    protected function getResource()
-    {
-        return $this->resource;
-    }
-
     public function getFormatState($key = 0, $enum = array(), $default = '')
     {
         return array_key_exists($key, $enum) ? $enum[$key] : $default;

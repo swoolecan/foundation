@@ -43,8 +43,14 @@ trait TraitResourceManager
 
     protected function getObject($type, $code, $params)
     {
-        $code = !empty($code) ? $this->getAppcode() . '-' . $code : get_called_class();
-        return $this->resource->getObject($type, $code, $params);
+        if (!empty($code)) {
+            $module = $this->getAppcode();
+            $code = strpos($code, $module) === 0 ? $code : $module . '-' . $code;
+        } else {
+            $code = get_called_class();
+        }
+        $resource = property_exists($this, 'resource') ? $this->resource : $this->getResource();
+        return $resource->getObject($type, $code, $params);
     }
 
     protected function getAppcode()
