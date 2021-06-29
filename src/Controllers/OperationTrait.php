@@ -93,7 +93,7 @@ trait OperationTrait
 
         $number = 0;
         if (empty($info)) {
-            $ids = $request->input($repository->getKeyName());
+            $ids = (array) $request->input($repository->getKeyName());
             foreach ($ids as $id) {
                 $info = $repository->find($id);
                 if (empty($info)){
@@ -112,7 +112,7 @@ trait OperationTrait
         if ($number) {
             return $this->success(['message' => "成功删除了{$number}条信息"]);
         }
-        return $this->success(['message' => '删除失败']);
+        return $this->error(400, '删除失败');
     }
 
     protected function getPointInfo($repository, $request, $throw = true)
