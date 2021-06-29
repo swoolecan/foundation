@@ -11,7 +11,7 @@ trait SearchFieldTrait
         $fields = $this->getSceneFields($scene . 'Search');
         $this->criteria = $this->criteria->make([]);
 
-        $sortElem = !isset($params['sort_elem']) || empty($param['sort_elem']) ? false : json_decode($params['sort_elem'], true);
+        $sortElem = !isset($params['sort_elem']) || empty($params['sort_elem']) ? false : json_decode($params['sort_elem'], true);
         if (!empty($sortElem)) {
             $criteriaClass = '\Framework\Baseapp\Criteria\SortCriteria';
             $this->pushCriteria(new $criteriaClass($sortElem));

@@ -16,7 +16,7 @@ trait TraitRelateCriteria
 
         $params = $this->params;
         $query = $query->whereHas($params['elem'], function ($query) use ($field, $params) {
-            $query->where($params['field'], $params['operator'], "%{$params['value']}");
+            $query = $query->where($params['field'], $params['operator'], "%{$params['value']}");
         });
 
         return $query;

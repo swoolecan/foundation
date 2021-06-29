@@ -23,7 +23,7 @@ trait TraitCommonCriteria
             $value = "%{$value}%";
         }
         
-        $query->where($field, $operator, $value);
+        $query = $query->where($field, $operator, $value);
         //echo $query->toSql() . '=======';
 
         return $query;

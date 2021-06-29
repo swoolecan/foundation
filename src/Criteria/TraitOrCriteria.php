@@ -13,7 +13,7 @@ trait TraitOrCriteria
         }
         $operator = $this->params['operator'];
         $value = $this->params['value'];
-        $query->where($field, $operator, $value);
+        $query = $query->where($field, $operator, $value);
 
         return $query;
     }

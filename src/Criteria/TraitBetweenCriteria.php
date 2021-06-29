@@ -14,7 +14,7 @@ trait TraitBetweenCriteria
         $value = $this->params['value'];
         $value = explode('|', $value);
 
-        $query->whereBetween($field, $value);
+        $query = $query->whereBetween($field, $value);
 
         return $query;
     }

@@ -35,4 +35,14 @@ trait TraitRepository
     {   
         return $this->model->{$name}(...$arguments);
     }
+
+    /**
+     * @param $info
+     * @param array $data
+     * @return mixed
+     */
+    public function updateInfo($info, array $data)
+    {
+        return $info->update($data);
+    }
 }

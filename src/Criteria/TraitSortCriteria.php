@@ -9,7 +9,7 @@ trait TraitSortCriteria
     {
         foreach ($this->params as $field => $sortType) {
             $sortType = in_array($sortType, ['asc', 'desc']) ? $sortType : 'desc';
-            $query->orderBy($field, $sortType);
+            $query = $query->orderBy($field, $sortType);
         }
 
         return $query;

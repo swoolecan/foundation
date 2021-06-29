@@ -15,7 +15,7 @@ trait TraitMultipleCriteria
         $mark = $this->params['mark'] ?? ',';
         $values = array_filter(explode($mark, $this->params['value']));
         foreach ($values as $value) {
-            $query->orWhere($field, $operator, $value);
+            $query = $query->orWhere($field, $operator, $value);
         }
 
         return $query;
