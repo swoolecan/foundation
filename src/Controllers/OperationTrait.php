@@ -19,20 +19,19 @@ trait OperationTrait
             $list = $repository->all();
         }
 
-        //$collectionClass = $repository->getCollectionClass();
-        //$collection = new $collectionClass($list, $scene, $repository, $simpleResult);
         $collection = $this->getCollectionObj(null, ['resource' => $list, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
         return $collection->toResponse($this->request);
-        //$list = $repository->all();//null, $params, (int) $pageSize);
-        //$list = $repository->getByCriteria($criteria)->all();
-        return $this->success($datas);
     }
 
     public function listinfoTree()
     {
         $resource = $this->resource->getResourceCode(get_called_class());
         $repository = $this->getRepositoryObj();
-        return $this->success($repository->getTreeLists());
+        $data = $repository->getTreeLists();
+        $data['code'] = 200;
+        $data['message'] = 'OK';
+        return response()->json($data);
+        return $this->success();
     }
 
     public function addGeneral()
@@ -60,7 +59,7 @@ trait OperationTrait
 
         $data = $request->getInputDatas('update');
         if (empty($data)) {
-            return $this->throwException(422, '没有输入参数');
+            return $this->resource->throwException(422, '没有输入参数');
         }
         $data = $request->validated();
         $result = $repository->updateInfo($info, $data);
@@ -76,20 +75,25 @@ trait OperationTrait
 
         $scene = $params['point_scene'] ?? 'view';
         $simpleResult = $params['simple_result'] ?? false;
-        //$resourceClass = $repository->getResourceClass();
-        //$resource = new $resourceClass($info, $scene, $repository, $simpleResult);
         $resource = $this->getResourceObj(null, ['resource' => $info, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
         return $resource->toResponse($request);
+    }
 
-        //$result->permissions;
-        return $this->success($info);
+    public function detail()
+    {
+        $repository = $this->getRepositoryObj();
+        $request = $this->getPointRequest('', $repository);
+        $params = $request->all();
+        $info = $this->getPointInfo($repository, $request, false);
+        $resource = $this->getResourceObj(null, ['resource' => $info, 'scene' => 'frontDetail', 'repository' => $repository, 'simpleResult' => false]);
+        return $resource->toResponse($request);
     }
 
     public function deleteGeneral()
     {
         $repository = $this->getRepositoryObj();
         $request = $this->getPointRequest('', $repository);
-        $info = $this->getPointInfo($repository, $request, false);
+        $info = $this->getPointInfo($repository, $request, true, false);
 
         $number = 0;
         if (empty($info)) {
@@ -115,25 +119,25 @@ trait OperationTrait
         return $this->error(400, '删除失败');
     }
 
-    protected function getPointInfo($repository, $request, $throw = true)
+    protected function getPointInfo($repository, $request, $routeParam = true, $throw = true)
     {
         $repository = $this->getRepositoryObj();
         $pointKey = $request->input('point_Key', false);
         $key = $pointKey ? $pointKey : $repository->getKeyName();
-        $value = $request->route($key);
+        $value = $routeParam ? $request->route($key) : $request->input($key);
         if (empty($key)) {
-            return $throw ? $this->throwException(422, '参数有误') : false;
+            return $throw ? $this->resource->throwException(422, '参数有误') : false;
         }
         $info = $repository->find($value);
         if (empty($info)) {
-            return $throw ? $this->throwException(404, '信息不存在') : false;
+            return $throw ? $this->resource->throwException(404, '信息不存在') : false;
         }
 
         $limitPriv = $request->get('limitPriv');
         if ($limitPriv) {
             $priv = $info->checkLimitPriv($limitPriv);
             if (empty($priv)) {
-                return $throw ? $this->throwException(403, '您没有执行该操作的权限') : false;
+                return $throw ? $this->resource->throwException(403, '您没有执行该操作的权限') : false;
             }
         }
         return $info;
