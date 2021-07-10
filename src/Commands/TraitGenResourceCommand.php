@@ -2,29 +2,14 @@
 
 declare(strict_types=1);
 
-/**
- * Swoolecan Baseapp
- */
-
 namespace Swoolecan\Foundation\Commands;
 
-use Hyperf\Command\Annotation\Command;
-use Hyperf\Devtool\Generator\GeneratorCommand;
-use Hyperf\Utils\Str;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @Command
- */
-class GenResourceCommand extends GeneratorCommand
+trait TraitGenResourceCommand
 {
-    public function __construct()
-    {
-        parent::__construct('gen:resource');
-    }
-
     public function configure()
     {
         parent::configure();

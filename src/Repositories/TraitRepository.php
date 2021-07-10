@@ -110,4 +110,25 @@ trait TraitRepository
 
         return $this->parserResult($model);
     }
+
+    /**
+     * Find data by multiple fields
+     *
+     * @param array $where
+     * @param array $columns
+     *
+     * @return mixed
+     */
+    public function findWhereOne(array $where, $columns = ['*'])
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+
+        $this->applyConditions($where);
+
+        $model = $this->model->first($columns);
+        $this->resetModel();
+
+        return $this->parserResult($model);
+    }
 }
