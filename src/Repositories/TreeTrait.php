@@ -78,7 +78,7 @@ trait TreeTrait
 
     public function getParentChains($info)
     {
-        $model = $this->getModel();
+        $model = $this->getModelObj();
         $keyField = $model->getKeyName();
         $parentField = $model->getParentField($keyField);
         $parentFirstValue = $model->getParentFirstValue($keyField);

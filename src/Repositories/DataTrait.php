@@ -92,7 +92,7 @@ trait DataTrait
     {
         $repository = is_null($resource) ? $this : $this->getRepositoryObj($resource);
         $datas = $repository->findWhere($where);
-        $collection = $this->getCollectionObj(null, ['resource' => $datas, 'scene' => $scene, 'repository' => $repository]);
+        $collection = $this->getCollectionObj($resource, ['resource' => $datas, 'scene' => $scene, 'repository' => $repository]);
         return $collection->toArray();
     }
 }

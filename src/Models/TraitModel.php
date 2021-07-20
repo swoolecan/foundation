@@ -97,34 +97,4 @@ trait TraitModel
         }
         return $datas;
     }
-
-    public function dealUpdated()
-    {
-        return true;
-    }
-
-    public function dealUpdating($data)
-    {
-        return true;
-    }
-
-    public function dealCreating($data)
-    {
-        return true;
-    }
-
-    public function dealCreated()
-    {
-        return true;
-    }
-
-    public function dealDeleted()
-    {
-        return true;
-    }
-
-    public function dealDeleting()
-    {
-        return true;
-    }
 }

@@ -42,9 +42,7 @@ trait TraitRepository
      */
     public function create(array $data)
     {
-        $this->model->dealCreating($data);
         $result = $this->model->create($data);
-        $result->dealCreated();
         return $result;
     }
 
@@ -69,9 +67,7 @@ trait TraitRepository
      */
     public function updateInfo($info, array $data)
     {
-        $info->dealUpdating($data);
         $result = $info->update($data);
-        $info->dealUpdated();
         return $result;
     }
 
@@ -87,9 +83,7 @@ trait TraitRepository
             $message .= $info[$info->getNameField()] . '信息无法被删除';
             return $this->resource->throwException(403, $message);
         }
-        $info->dealDeleting();
         $result = $info->delete();
-        $info->dealDeleted();
         return $result;
     }
 

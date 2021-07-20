@@ -44,8 +44,12 @@ trait TraitResourceManager
     protected function getObject($type, $code, $params)
     {
         if (!empty($code)) {
+            if (strpos($code, '\\')) {
+                return $code;
+            }
             $module = $this->getAppcode();
-            $code = strpos($code, $module) === 0 ? $code : $module . '-' . $code;
+            //$code = strpos($code, $module) === 0 ? $code : $module . '-' . $code;
+            $code = strpos($code, '-') !== false ? $code : $module . '-' . $code;
         } else {
             $code = get_called_class();
         }
