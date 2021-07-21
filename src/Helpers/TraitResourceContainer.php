@@ -21,7 +21,7 @@ trait TraitResourceContainer
         $this->params = array_merge($this->params, $params);
     }
 
-    public function getResourceCode($class)
+    public function getResourceCode($class, $withModule = true)
     {
         $elems = explode('\\', $class);
         $count = count($elems);
@@ -46,7 +46,7 @@ trait TraitResourceContainer
         }
         //$code = $this->strOperation($code, 'snake', '-');//Str::snake($code, '-');
         $code = lcfirst($code);
-        return $module . '-' . $code;
+        return $withModule ? $module . '-' . $code : $code;
     }
 
     public function getObject($type, $code, $params = [])

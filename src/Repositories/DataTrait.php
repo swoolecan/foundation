@@ -17,7 +17,7 @@ trait DataTrait
     public function getCacheOutData($app, $resource, $key, $keyField = 'id')
     {
         $app = ucfirst($app);
-        $class = "\Swoolecan\Foundation\RpcClient\\{$app}RpcClient";
+        $class = "\Framework\Baseapp\RpcClient\\{$app}RpcClient";
         $client = make($class);
         return $client->getCacheData($app, $resource, $key, $keyField);
     }
@@ -34,12 +34,12 @@ trait DataTrait
 
     public function getAttachmentInfos($params)
     {
-        $currentAppCode = config('app_code');
+        $currentAppCode = $this->getAppcode();//config('app_code');
         if ($currentAppCode == 'passport') {
             return $this->resource->getObject('repository', 'attachmentInfo')->getDatas($params);
         }
-        $class = "\Swoolecan\Foundation\RpcClient\PassportRpcClient";
-        $client = make($class);
+        $class = "\Framework\Baseapp\RpcClient\PassportRpcClient";
+        $client = $this->resource->getObjectByClass($class);
         return $client->getAttachmentInfos($params);
     }
 

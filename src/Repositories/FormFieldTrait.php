@@ -22,10 +22,10 @@ trait FormFieldTrait
                 $data['infos'] = (object) $this->getKeyValues($field);
             }
             if (in_array($data['type'], ['file']) && !isset($data['resource'])) {
-                $data['resource'] = $this->resource->getResourceCode(get_called_class());
+                $data['resource'] = $this->resource->getResourceCode(get_called_class(), false);
             }
             if (in_array($data['type'], ['file']) && !isset($data['app'])) {
-                $data['app'] = config('app_code');
+                $data['app'] = $this->getAppcode();//config('app_code');
             }
             $data['options'] = $fieldNames[$field] ?? ['name' => $field];
             $datas[$field] = $data;
@@ -42,6 +42,7 @@ trait FormFieldTrait
             'user_id' => ['type' => 'selectSearch', 'require' => ['add'], 'searchResource' => 'user', 'searchApp' => 'passport'],
             'status' => ['type' => 'radio'],
             'thumb' => ['type' => 'file', 'filetype' => 'image', 'minnum' => 1, 'maxnum' => 10],
+            'cover' => ['type' => 'file', 'filetype' => 'image', 'minnum' => 1, 'maxnum' => 10],
             'logo' => ['type' => 'file', 'filetype' => 'image', 'minnum' => 1, 'maxnum' => 1],
             'picture' => ['type' => 'file', 'filetype' => 'image', 'minnum' => 1, 'maxnum' => 10],
             'area' => ['type' => 'cascader'],

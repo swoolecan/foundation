@@ -55,9 +55,9 @@ trait ShowFieldTrait
                 $value = $model->$field->toDateTimeString();
                 $data['valueSource'] = $value;
             } elseif ($valueType == 'file') {
-                $resource = $data['resource'] ?? $this->resource->getResourceCode(get_called_class());
+                $resource = $data['resource'] ?? $this->resource->getResourceCode(get_called_class(), false);
                 $key = $model->getKeyField();
-                $value = $this->getAttachmentInfos(['app' => config('app_code'), 'info_table' => $resource, 'info_field' =>$field, 'info_id' => $model->$key]);
+                $value = $this->getAttachmentInfos(['app' => $this->getAppcode(), 'info_table' => $resource, 'info_field' =>$field, 'info_id' => $model->$key]);
                 $data['valueSource'] = [];
                 if (!empty($value)) {
                     foreach ($value as $fileDetail) {
@@ -82,6 +82,7 @@ trait ShowFieldTrait
             'status' => ['valueType' => 'key'],
             'orderlist' => ['showType' => 'edit'],
             'logo' => ['showType' => 'file', 'valueType' => 'file'],
+            'cover' => ['showType' => 'file', 'valueType' => 'file'],
             'thumb' => ['showType' => 'file', 'valueType' => 'file'],
             'picture' => ['showType' => 'file', 'valueType' => 'file'],
             'created_at' => ['valueType' => 'datetime'],

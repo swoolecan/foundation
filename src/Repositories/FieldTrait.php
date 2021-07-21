@@ -38,6 +38,7 @@ trait FieldTrait
             'logo' =>['width' => '150'],
             'picture' =>['width' => '150'],
             'thumb' =>['width' => '150'],
+            'cover' =>['width' => '150'],
             'title' => ['width' => '200', 'rowNum' => 1, 'withPop' => 1],
             'created_at' => ['width' => '160'],
             'point_operation' => ['width' => '160', 'name' => '特定操作'],
@@ -83,5 +84,16 @@ trait FieldTrait
             return $datas[$value];
         }
         return $value;
+    }
+
+    public function getDefaultSort()
+    {
+        $model = $this->getModel();
+        $sKey = $model->getKeyField();
+        if ($sKey != 'id' && !$model->timestamps) {
+            return [];
+        }
+        $sKey = $sKey != 'id' ? $model->getCreatedAtColumn() : $sKey;
+        return [$sKey => 'desc'];
     }
 }
