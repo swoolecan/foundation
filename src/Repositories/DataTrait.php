@@ -24,23 +24,35 @@ trait DataTrait
 
     /*public function getSingleAttachmentData($app, $params)
     {
-        $currentAppCode = config('app_code');
-        if ($currentAppCode == 'passport') {
+        $currentAppcode = config('app_code');
+        if ($currentAppcode == 'passport') {
             return $this->getCacheData('attachmentInfo', $params);
         }
 
         return $this->getCacheOutData('passport', 'attachmentInfo', $params);
     }*/
 
-    public function getAttachmentInfos($params)
+    public function getAttachmentInfo($params)
     {
-        $currentAppCode = $this->getAppcode();//config('app_code');
-        if ($currentAppCode == 'passport') {
-            return $this->resource->getObject('repository', 'attachmentInfo')->getDatas($params);
+        return $this->getAttachmentInfos($params, true);
+    }
+
+    public function getAttachmentUrl($params)
+    {
+        return $this->getAttachmentInfos($params, true, true);
+    }
+
+    public function getAttachmentInfos($params, $isSingle = false, $onlyUrl = false)
+    {
+        $currentAppcode = $this->getAppcode();//config('app_code');
+        $params['app'] = $params['app'] ?? $currentAppcode;
+        if ($currentAppcode == 'passport') {
+            $attachmentInfo = $this->resource->getObject('repository', 'attachmentInfo');
+            return $isSingle ? $attachmentInfo->getData($params, $onlyUrl) : $attachmentInfo->getDatas($params);
         }
         $class = "\Framework\Baseapp\RpcClient\PassportRpcClient";
         $client = $this->resource->getObjectByClass($class);
-        return $client->getAttachmentInfos($params);
+        return $isSingle ? $client->getAttachmentInfo($params, $onlyUrl) : $client->getAttachmentInfos($params);
     }
 
     public function getCacheData($resource, $key)

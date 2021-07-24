@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Resources;
+declare(strict_types = 1);
 
-use Swoolecan\Foundation\Resources\AbstractResource;
+namespace %NAMESPACE%;
 
 class %CLASS% extends AbstractResource
 {

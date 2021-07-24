@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace App\Models;
+namespace %NAMESPACE%;
 
 class %CLASS% extends AbstractModel
 {
-    //protected $table = '';
-    protected $fillable = ['name'];
+    protected $table = '%TABLE%';
+    //protected $guarded = ['id'];
 
 }
