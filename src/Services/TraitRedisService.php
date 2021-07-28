@@ -13,14 +13,14 @@ trait TraitRedisService
 
     public function set($key, $value)
     {
-        $value = is_array($value) ? serialize($value) : $value;
+        $value = is_array($value) ? json_encode($value) : $value;
         $this->redis->set($key, $value);
     }
 
     public function get($key, $returnArray = false)
     {
         $value = $this->redis->get($key);
-        return $returnArray ? unserialize($value) : $value;
+        return $returnArray ? json_decode($value, true) : $value;
     }
 
     public function mset($mkv)

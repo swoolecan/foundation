@@ -4,33 +4,9 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Repositories;
 
-use Hyperf\Cache\Annotation\CachePut;
-use Hyperf\Cache\Annotation\Cacheable;
-
 trait DataTrait
 {
-    /*public function getPointValues($resourceCode)
-    {
-        return array_merge($this->model->getColumnElems(), $this->extAttributeNames());
-    }*/
-
-    public function getCacheOutData($app, $resource, $key, $keyField = 'id')
-    {
-        $app = ucfirst($app);
-        $class = "\Framework\Baseapp\RpcClient\\{$app}RpcClient";
-        $client = make($class);
-        return $client->getCacheData($app, $resource, $key, $keyField);
-    }
-
-    /*public function getSingleAttachmentData($app, $params)
-    {
-        $currentAppcode = config('app_code');
-        if ($currentAppcode == 'passport') {
-            return $this->getCacheData('attachmentInfo', $params);
-        }
-
-        return $this->getCacheOutData('passport', 'attachmentInfo', $params);
-    }*/
+    use CacheRpcTrait;
 
     public function getAttachmentInfo($params)
     {
@@ -40,6 +16,13 @@ trait DataTrait
     public function getAttachmentUrl($params)
     {
         return $this->getAttachmentInfos($params, true, true);
+    }
+
+    public function getRegionData($code, $returnName = false)
+    {
+        $regions = $this->getPointCaches('region', 'common', 'passport');
+        $region = $regions[$code] ?? [];
+        return $returnName ? ($region['name'] ?? '') : $region;
     }
 
     public function getAttachmentInfos($params, $isSingle = false, $onlyUrl = false)
@@ -53,38 +36,6 @@ trait DataTrait
         $class = "\Framework\Baseapp\RpcClient\PassportRpcClient";
         $client = $this->resource->getObjectByClass($class);
         return $isSingle ? $client->getAttachmentInfo($params, $onlyUrl) : $client->getAttachmentInfos($params);
-    }
-
-    public function getCacheData($resource, $key)
-    {
-        return $this->getModelObj($resource)->findCacheData($key);
-    }
-
-    public function getCacheDatas($resource = null, $type = 'list', $simple = true, $isArray = false, $throw = true)
-    {
-        //$models = User::findManyFromCache($ids);
-        $resource = is_null($resource) ? $this->resource->getResourceCode(get_called_class()) : $resource;
-        $model = $this->getModelObj($resource);
-        $total = $model->count();
-        if ($total > 5000) {
-            if ($throw) {
-                return $this->throwException('数据太多');
-            }
-            return false;
-        }
-        return $this->_cacheDatas($this->config->get('app_code'), $resource, $type, $simple, $isArray);
-    }
-
-    /**
-     * @Cacheable(prefix="fulltable-cache")
-     */
-    protected function _cacheDatas($app, $resource, $type, $simple, $isArray)
-    {
-        $model = $this->getModelObj($resource);
-        $keyField = $model->getKeyName();
-        $infos = $model->all();
-    
-        return $this->formatResultInfos($infos, $keyField, $type, $simple, $isArray);
     }
 
     protected function formatResultInfos($infos, $keyField, $type, $simple, $isArray)

@@ -46,13 +46,16 @@ trait ShowFieldTrait
                 $relate = $relate ? $this->get($relate) : false;
                 $relateField = $data['relateField'] ?? 'name';
                 $value = $relate ? $relate[$relateField] : $value;
-            } elseif ($valueType == 'cacheOut') {
-                $value = $this->getCacheOutData($data['app'], $data['relate'], $value, $data['keyField']);
+            } elseif ($valueType == 'rpc') {
+                $value = $this->getRpcData($data['app'], $data['relate'], $value, $data['keyField']);
             } elseif ($valueType == 'callback') {
                 $method = $data['method'];
                 $value = $this->$method($model, $field);
             } elseif ($valueType == 'datetime') {
                 $value = $model->$field->toDateTimeString();
+                $data['valueSource'] = $value;
+            } elseif ($valueType == 'region') {
+                $value = $this->getRegionData($model->$field, true);
                 $data['valueSource'] = $value;
             } elseif ($valueType == 'file') {
                 $resource = $data['resource'] ?? $this->resource->getResourceCode(get_called_class(), false);
@@ -82,13 +85,16 @@ trait ShowFieldTrait
             'status' => ['valueType' => 'key'],
             'orderlist' => ['showType' => 'edit'],
             'logo' => ['showType' => 'file', 'valueType' => 'file'],
+            'province_code' => ['valueType' => 'region'],
+            'city_code' => ['valueType' => 'region'],
+            'county_code' => ['valueType' => 'region'],
             'cover' => ['showType' => 'file', 'valueType' => 'file'],
             'thumb' => ['showType' => 'file', 'valueType' => 'file'],
             'picture' => ['showType' => 'file', 'valueType' => 'file'],
             'created_at' => ['valueType' => 'datetime'],
             'updated_at' => ['valueType' => 'datetime'],
             'user_id' => ['valueType' => 'point', 'relate' => 'user'],
-            'region_code' => ['valueType' => 'cacheOut', 'relate' => 'region', 'app' => 'passport', 'keyField' => 'code'],
+            'region_code' => ['valueType' => 'rpc', 'relate' => 'region', 'app' => 'passport', 'keyField' => 'code'],
         ];
     }
 

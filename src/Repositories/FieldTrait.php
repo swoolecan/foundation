@@ -75,7 +75,8 @@ trait FieldTrait
 
     public function getKeyValues($elem, $value = null)
     {
-        $method = "_{$elem}KeyDatas";
+        $method = $this->resource->strOperation($elem, 'camel');
+        $method = "_{$method}KeyDatas";
         $datas = $this->$method();
         if (is_null($value)) {
             return $datas;

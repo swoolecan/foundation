@@ -77,12 +77,12 @@ trait TraitRepository
      */
     public function deleteInfo($info, $number)
     {
-        $canDelete = $info->canDelete();
+        /*$canDelete = $info->canDelete();
         if (empty($canDelete)) {
             $message = $number ? "已删除 {$number} 条信息" : '';
             $message .= $info[$info->getNameField()] . '信息无法被删除';
             return $this->resource->throwException(403, $message);
-        }
+        }*/
         $result = $info->delete();
         return $result;
     }

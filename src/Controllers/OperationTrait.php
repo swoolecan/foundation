@@ -104,12 +104,13 @@ trait OperationTrait
                     continue;
                 }
                 //$info->delete();
-                $number++;
-                $repository->deleteInfo($info, $number);
+                $result = $repository->deleteInfo($info, $number);
+                $number += $result ? 1 :0;
             }
         } else {
             $result = $repository->deleteInfo($info, $number);
             $number = 1;
+            $number = $result ? 1 :0;
         }
 
         //$result->permissions;

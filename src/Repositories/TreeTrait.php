@@ -4,9 +4,6 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Repositories;
 
-use Hyperf\Cache\Annotation\CachePut;
-use Hyperf\Cache\Annotation\Cacheable;
-
 trait TreeTrait
 {
     public function getPointTreeDatas($resource = null, $level = 2, $type = 'keyvalue', $isArray = true, $simple = true)
@@ -16,11 +13,8 @@ trait TreeTrait
         return $this->_pointTreeDatas($app, $resource, $level, $type, $isArray, $simple);
     }
 
-    /**
-     */
     public function _pointTreeDatas($app, $resource, $level, $type, $isArray, $simple)
     {
-     //* @Cacheable(prefix="fulltable-cache")
         $model = $this->getModelObj($resource);
         $keyField = $model->getKeyName();
         $parentField = $model->getParentField($keyField);
