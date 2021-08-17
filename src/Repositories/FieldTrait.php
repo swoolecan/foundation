@@ -37,7 +37,7 @@ trait FieldTrait
             'orderlist' => ['width' => '80'],
             'logo' =>['width' => '150'],
             'picture' =>['width' => '150'],
-            'thumb' =>['width' => '150'],
+            'thumb' =>['name' => '主图', 'width' => '150'],
             'cover' =>['width' => '150'],
             'title' => ['width' => '200', 'rowNum' => 1, 'withPop' => 1],
             'created_at' => ['width' => '160'],
