@@ -1,0 +1,38 @@
+{
+    "name": "candocker/{{MODULE}}",
+    "type": "project",
+    "keywords": [
+        "php",
+        "application",
+        "{{MODULE}}",
+        "resource"
+    ],
+    "description": "A application of {{MODULE}}",
+    "license": "MIT",
+    "require": {
+        "php": "^7.3.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Module{{UMODULE}}\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Module{{UMODULE}}\\Test\\": "./test/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": [],
+    "scripts": {
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
+    }
+}

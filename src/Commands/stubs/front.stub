@@ -1,0 +1,9 @@
+import BaseModel from './BaseModel';
+let conf = BaseModel.getMethodConf();
+conf.http.url = '/{{APP}}/{{RESOURCE}}'
+
+export default class {{URESOURCE}} extends BaseModel {
+  static entity = '{{RESOURCEMARK}}'
+
+  static methodConf = conf
+}
