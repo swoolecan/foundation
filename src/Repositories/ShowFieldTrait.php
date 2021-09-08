@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Repositories;
 
-use Hyperf\Utils\Str;
-
 trait ShowFieldTrait
 {
     public function getFormatShowFields($scene, $model, $simple = false)
@@ -69,8 +67,8 @@ trait ShowFieldTrait
                 }
             } elseif ($valueType == 'popover') {
                 $strLen = $data['strLen'] ?? 1;
-                $suffix = $strLen < Str::length($value) ? '...' : '';
-                $value = Str::substr($value, 0, $strLen) . $suffix; 
+                $suffix = $strLen < $this->resource->strOperation($value, 'length') ? '...' : '';
+                $value = $this->resource->strOperation($value, 'substr', ['start' => 0, 'length' => $strLen]) . $suffix; 
             }
             $data['value'] = $value;
             $datas[$field] = $simple ? $value : $data;
