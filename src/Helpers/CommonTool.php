@@ -6,6 +6,8 @@ namespace Swoolecan\Foundation\Helpers;
 
 class CommonTool
 {
+    use TraitToolSpell;
+
     public static function generateUniqueString($length = 6)
     {
         // 字符集，可任意添加你需要的字符

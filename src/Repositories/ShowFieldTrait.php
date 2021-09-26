@@ -66,7 +66,7 @@ trait ShowFieldTrait
                     }
                 }
             } elseif ($valueType == 'popover') {
-                $strLen = $data['strLen'] ?? 1;
+                $strLen = $data['strLen'] ?? 20;
                 $suffix = $strLen < $this->resource->strOperation($value, 'length') ? '...' : '';
                 $value = $this->resource->strOperation($value, 'substr', ['start' => 0, 'length' => $strLen]) . $suffix; 
             }
@@ -80,6 +80,7 @@ trait ShowFieldTrait
     public function getDefaultShowFields()
     {
         return [
+            'description' => ['showType' => 'popover', 'valueType' => 'popover'],
             'status' => ['valueType' => 'key'],
             'orderlist' => ['showType' => 'edit'],
             'logo' => ['showType' => 'file', 'valueType' => 'file'],

@@ -34,6 +34,7 @@ trait FieldTrait
         return array_merge([
             'id' => ['width' => '60'],
             'name' => ['width' => '80'],
+            'description' => ['width' => '300'],
             'orderlist' => ['width' => '80'],
             'logo' =>['width' => '150'],
             'picture' =>['width' => '150'],

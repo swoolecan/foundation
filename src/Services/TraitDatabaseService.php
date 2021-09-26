@@ -52,8 +52,8 @@ trait TraitDatabaseService
             $where['TABLE_NAME'] = $table;
         }
         //$results = $this->getConnection($connection)->table(\DB::raw('information_schema.COLUMNS'))->where($where)->whereIn('COLUMN_NAME', ['created_at', 'updated_at'])->get();
-        $results = $this->getConnection($connection)->table(\DB::raw('information_schema.COLUMNS'))->where($where)->where('COLUMN_NAME', 'like', '%_at')->get();
-        //$results = $this->getConnection($connection)->table(\DB::raw('information_schema.COLUMNS'))->where($where)->get();
+        //$results = $this->getConnection($connection)->table(\DB::raw('information_schema.COLUMNS'))->where($where)->where('COLUMN_NAME', 'like', '%_at')->get();
+        $results = $this->getConnection($connection)->table(\DB::raw('information_schema.COLUMNS'))->where($where)->get();
         $fields = [
             'name' => 'COLUMN_NAME',
             'comment' => 'COLUMN_COMMENT',
