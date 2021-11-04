@@ -34,7 +34,7 @@ trait FieldTrait
         return array_merge([
             'id' => ['width' => '60'],
             'name' => ['width' => '80'],
-            'description' => ['width' => '300'],
+            'description' => ['width' => '80'],
             'orderlist' => ['width' => '80'],
             'logo' =>['width' => '150'],
             'picture' =>['width' => '150'],
@@ -97,5 +97,14 @@ trait FieldTrait
         }
         $sKey = $sKey != 'id' ? $model->getCreatedAtColumn() : $sKey;
         return [$sKey => 'desc'];
+    }
+
+    protected function _statusKeyDatas()
+    {
+        return [
+            0 => '未激活',
+            1 => '使用中',
+            99 => '锁定',
+        ];
     }
 }

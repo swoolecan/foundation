@@ -50,7 +50,7 @@ trait ShowFieldTrait
                 $method = $data['method'];
                 $value = $this->$method($model, $field);
             } elseif ($valueType == 'datetime') {
-                $value = $model->$field->toDateTimeString();
+                $value = empty($model->$field) ? '' : $model->$field->toDateTimeString();
                 $data['valueSource'] = $value;
             } elseif ($valueType == 'region') {
                 $value = $this->getRegionData($model->$field, true);

@@ -7,6 +7,6 @@ namespace %NAMESPACE%;
 class %CLASS% extends AbstractModel
 {
     protected $table = '%TABLE%';
-    //protected $guarded = ['id'];
+    protected $guarded = ['id'];
 
 }
