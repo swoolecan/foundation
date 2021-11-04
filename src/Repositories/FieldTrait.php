@@ -43,6 +43,9 @@ trait FieldTrait
             'title' => ['width' => '200', 'rowNum' => 1, 'withPop' => 1],
             'created_at' => ['width' => '160'],
             'point_operation' => ['width' => '160', 'name' => '特定操作'],
+            'ftitle' =>['name' => '头衔', 'width' => '100'],
+            'birthday' =>['name' => '出生日期', 'width' => '100'],
+            'deathday' =>['name' => '去世日期', 'width' => '100'],
         ], $this->_getFieldOptions());
     }
 

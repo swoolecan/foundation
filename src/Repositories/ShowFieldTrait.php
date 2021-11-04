@@ -55,6 +55,12 @@ trait ShowFieldTrait
             } elseif ($valueType == 'region') {
                 $value = $this->getRegionData($model->$field, true);
                 $data['valueSource'] = $value;
+            } elseif ($valueType == 'extinfo') {
+                $method = ucfirst($data['extType']);
+                $method = "get{$method}";
+                $extInfo = $model->$method($field);
+                $value = $extInfo['show'];
+                $data['valueSource'] = $extInfo['source'];
             } elseif ($valueType == 'file') {
                 $resource = $data['resource'] ?? $this->resource->getResourceCode(get_called_class(), false);
                 $key = $model->getKeyField();

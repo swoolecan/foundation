@@ -9,6 +9,7 @@ trait TraitRequest
     protected $_scene;
     protected $_repository;
     protected $_info;
+    public $allowEmpty = false;
 
     public function authorize(): bool
     {
@@ -92,6 +93,11 @@ trait TraitRequest
         }
         //$this->getRepository()->fillable(array_keys($data));
         $r = $this->getRepository()->unguard(true);
+        return $data;
+    }
+
+    public function filterDirtyData($data)
+    {
         return $data;
     }
 

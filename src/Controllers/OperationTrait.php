@@ -43,6 +43,7 @@ trait OperationTrait
             return $this->success(['formFields' => $repository->getFormatFormFields('add'), 'fieldNames' => $repository->getAttributeNames('add')]);
         }
         $data = $request->getInputDatas('add');
+        $data = $request->filterDirtyData($data);
         $result = $repository->create($data);
         return $this->success($result);
     }
@@ -58,10 +59,11 @@ trait OperationTrait
         $info = $this->getPointInfo($repository, $request);
 
         $data = $request->getInputDatas('update');
-        if (empty($data)) {
+        if (empty($data) && empty($request->allowEmpty)) {
             return $this->resource->throwException(422, '没有输入参数');
         }
         $data = $request->validated();
+        $data = $request->filterDirtyData($data);
         $result = $repository->updateInfo($info, $data);
         return $this->success([]);
     }
