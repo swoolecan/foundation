@@ -34,6 +34,12 @@ trait ShowFieldTrait
                 $value = $this->getKeyValues($field, $model->$field);
             } elseif ($valueType == 'select') {
                 $value = $this->getKeyValues($field);
+            } elseif ($valueType == 'link') {
+                $value = $model->baidu_url;
+                if (!empty($value)) {
+                    $showName = $data['showName'] ?? $value;
+                    $value = "<a href='{$value}' target='_blank'>{$showName}</a>";
+                }
             } elseif ($valueType == 'point') {
                 $relate = $data['relate'];
                 $relate = $relate ? $model->$relate : false;
@@ -86,15 +92,20 @@ trait ShowFieldTrait
     public function getDefaultShowFields()
     {
         return [
-            'description' => ['showType' => 'popover', 'valueType' => 'popover'],
+            //'description' => ['showType' => 'popover', 'valueType' => 'popover'],
+            'description' => ['showType' => 'edit'],
+            'publish_at' => ['showType' => 'edit'],
             'status' => ['valueType' => 'key'],
             'orderlist' => ['showType' => 'edit'],
+            'baidu_url' => ['showType' => 'edit'],
+            'baidu_url_show' => ['valueType' => 'link', 'showName' => '百度百科'],
             'logo' => ['showType' => 'file', 'valueType' => 'file'],
             'province_code' => ['valueType' => 'region'],
             'city_code' => ['valueType' => 'region'],
             'county_code' => ['valueType' => 'region'],
             'cover' => ['showType' => 'file', 'valueType' => 'file'],
             'thumb' => ['showType' => 'file', 'valueType' => 'file'],
+            'photo' => ['showType' => 'file', 'valueType' => 'file'],
             'picture' => ['showType' => 'file', 'valueType' => 'file'],
             'created_at' => ['valueType' => 'datetime'],
             'updated_at' => ['valueType' => 'datetime'],

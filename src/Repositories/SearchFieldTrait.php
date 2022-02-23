@@ -58,6 +58,7 @@ trait SearchFieldTrait
             'parent_code' => ['type' => 'multiple'],
             'user_id' => [],
             'name' => ['operator' => 'like'],
+            'keyword' => ['operator' => 'like', 'field' => 'name'],
             'code' => ['operator' => 'like'],
             'region_code' => [],
             'created_at' => ['type' => 'between'],

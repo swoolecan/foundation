@@ -27,6 +27,9 @@ trait FormFieldTrait
             if (in_array($data['type'], ['file']) && !isset($data['app'])) {
                 $data['app'] = $this->getAppcode();//config('app_code');
             }
+            if (in_array($data['type'], ['complexSelectSearch', 'selectSearch']) && !isset($data['searchApp'])) {
+                $data['searchApp'] = $this->getAppcode();
+            }
             $data['options'] = $fieldNames[$field] ?? ['name' => $field];
             $datas[$field] = $data;
         }

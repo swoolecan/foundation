@@ -127,7 +127,8 @@ trait OperationTrait
         $repository = $this->getRepositoryObj();
         $pointKey = $request->input('point_Key', false);
         $key = $pointKey ? $pointKey : $repository->getKeyName();
-        $value = $routeParam ? $request->route($key) : $request->input($key);
+        //$value = $routeParam ? $request->route($key) : $request->input($key);
+        $value = $routeParam ? $request->route($key) : ($request->route($key) ? $request->route($key) : $request->input($key));
         if (empty($key)) {
             return $throw ? $this->resource->throwException(422, '参数有误') : false;
         }

@@ -22,6 +22,12 @@ trait TraitWechatService
 			$config = config('wechat.official_account.' . $code);
 			return Factory::officialAccount($config);
             //return \EasyWeChat::officialAccount($code);
+        case 'work':
+			$config = config('wechat.work.' . $code);
+			return Factory::work($config);
+        case 'miniProgram':
+			$config = config('wechat.mini_program.' . $code);
+			return Factory::work($config);
         }
         //$app   = Factory::openPlatform($config);
     }
