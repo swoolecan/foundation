@@ -134,6 +134,7 @@ trait OperationTrait
         }
         $info = $repository->find($value);
         if (empty($info)) {
+            \Log::info('aaaa' . serialize($request->all()));
             return $throw ? $this->resource->throwException(404, '信息不存在') : false;
         }
 

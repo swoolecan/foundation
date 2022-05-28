@@ -48,7 +48,7 @@ trait TreeTrait
             if ($total > 5000) {
                 return $this->throwException('数据太多');
             }
-            $infos = $this->all();
+            $infos = $this->getInfosForTree();
         }
         $keyField = $model->getKeyName();
         $parentField = $model->getParentField($keyField);
@@ -94,7 +94,7 @@ trait TreeTrait
 
     public function _formatTreeDatas($infos, $key, $parentKey, $parent, $type = 'list', $forceArray = true, $simple = false)
     { 
-        $datas = [];          
+        $datas = [];
         foreach ($infos as $iKey => $info) { 
             //$info = $iValue->toArray();    
             if ($info[$parentKey] == $parent) {
@@ -113,5 +113,10 @@ trait TreeTrait
             }
         }
         return $datas;        
+    }
+
+    public function getInfosForTree($orderField = 'orderlist')
+    {
+        return $this->model->orderBy($orderField, 'desc')->get();
     }
 }

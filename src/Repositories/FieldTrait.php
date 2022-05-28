@@ -35,7 +35,7 @@ trait FieldTrait
             'id' => ['width' => '60'],
             'name' => ['width' => '80'],
             'description' => ['width' => '200'],
-            'baidu_url' => ['width' => '400'],
+            'baidu_url' => ['width' => '80'],
             'orderlist' => ['width' => '80'],
             'logo' =>['width' => '150'],
             'picture' =>['width' => '150'],

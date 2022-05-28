@@ -68,7 +68,7 @@ trait TraitRepository
     public function updateInfo($info, array $data)
     {
         $result = $info->update($data);
-        return $result;
+        return $info;
     }
 
     /**
