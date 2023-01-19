@@ -97,6 +97,7 @@ trait ShowFieldTrait
             'publish_at' => ['showType' => 'edit'],
             'status' => ['valueType' => 'key'],
             'orderlist' => ['showType' => 'edit'],
+            'url' => ['valueType' => 'link', 'showName' => 'URL'],
             'baidu_url' => ['valueType' => 'link', 'showName' => '百度百科'],
             'wiki_url' => ['valueType' => 'link', 'showName' => '维基百科'],
             //'baidu_url' => ['showType' => 'edit'],
