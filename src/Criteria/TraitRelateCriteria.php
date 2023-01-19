@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Criteria;
@@ -15,10 +15,10 @@ trait TraitRelateCriteria
         }
 
         $params = $this->params;
-        $query = $query->whereHas($params['elem'], function ($query) use ($field, $params) {
-            $query = $query->where($params['field'], $params['operator'], "%{$params['value']}");
+        $query = $query->whereHasIn($params['elem'], function ($query) use ($field, $params) {
+            $value = $params['operator'] == 'like' ? "%{$params['value']}%" : $params['value'];
+            return $query->where($params['field'], $params['operator'], $value);
         });
-
         return $query;
     }
 }

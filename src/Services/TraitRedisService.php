@@ -35,12 +35,12 @@ trait TraitRedisService
 
     public function mget($mkv)
     {
-        $retval = $redis->mget(array_keys($mkv)); // 获取多个key对应的value
+        $retval = $this->redis->mget(array_keys($mkv)); // 获取多个key对应的value
     }
 
     public function setex($key, $duration, $value)
     {
-        $redis->setex($key , $duration, $value); // setex 存放带存储时效的记录 存储key为library,值为phpredis的记录，有效时长为10秒
+        $this->redis->setex($key , $duration, $value); // setex 存放带存储时效的记录 存储key为library,值为phpredis的记录，有效时长为10秒
     }
 
     public function exists($key)
@@ -77,7 +77,34 @@ trait TraitRedisService
             $data = unserialize($data);
         }
         return $datas;
-        //$redis->lrange('foolist' , 0 , -1);//返回第0个至倒数第一个，相当于返回所有元素  
+        //$redis->lrange('foolist' , 0 , -1);//返回第0个至倒数第一个，相当于返回所有元素
+    }
+
+    public function hget($key, $filed) {
+        return $this->redis->hget($key, $filed);
+    }
+
+    public function hset($key, $filed, $value) {
+        $this->redis->hset($key, $filed, $value);
+    }
+
+    public function hDel($key, $filed) {
+        $this->redis->hDel($key, $filed);
+    }
+
+    public function hIncrBy($key, $filed, $num = 1) {
+        $this->redis->hIncrBy($key, $filed, $num);
+    }
+
+    public function hExists($key, $filed) {
+        return $this->redis->hExists($key, $filed);
+    }
+
+    public function expireat($key, $time = null) {
+        if(is_null($time)) {
+            $time = strtotime(date("Y-m-d 23:59:59"),time());
+        }
+        $this->redis->expireat($key, $time);
     }
 }
 
@@ -86,7 +113,7 @@ add操作，不会覆盖已有值
 $redis->setnx("foo" , 12); //返回true, 添加成功  存在不做任何操作  否则创建
 $redis->setnx('foo' , 34); //返回false ，添加失败，因为存在键名foo的记录
 
-$redis->getset('foo' , 56);// getset 是 set的变种，结果返回替换前的值//返回12；如果之前不存在记录，则返回null 
+$redis->getset('foo' , 56);// getset 是 set的变种，结果返回替换前的值//返回12；如果之前不存在记录，则返回null
 
 //incrby/incr/decrby/decr对值得递增和递减
 $redis->incr('foo'); //返回57 ，递增 阶梯为1
@@ -139,7 +166,7 @@ $redis->rpushx('foolist' , 'bar2'); // 返回3 ， rpushx只对已存在的队�
 //lindex 返回指定顺序位置的list元素
 $redis->lindex('foolist' , 1); //返回bar1
 
-// lset 修改队列中指定位置的value 
+// lset 修改队列中指定位置的value
 $redis->lset('foolist' , 1 ,'123'); // 修改位置1的元素，返回true
 
 // lrem 删除队列中左起指定数量的字符
@@ -158,8 +185,8 @@ $redis->rpush('list1' , 'ab0');
 $redis->rpush('list1','ab1');
 $redis->rpush('list2' , 'ab2');
 $redis->rpush('list2' , "ab3");
-$redis->rpoplpush('list1' , "list2"); 
-$redis->rpoplpush('list2' , 'list2'); 
+$redis->rpoplpush('list1' , "list2");
+$redis->rpoplpush('list2' , 'list2');
 
 //linsert在队列的中间指定元素前或后插入元素
 $redis->linsert('list2' , 'before' , 'ab1' , '123');//表示在元素 ‘ab1’ 之前插入‘123’

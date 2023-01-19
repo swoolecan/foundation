@@ -15,6 +15,8 @@ trait TraitRepository
     use ShowFieldTrait;
     use TreeTrait;
 
+    public $currentScene;
+
     /**
      * @var query
      */
@@ -124,5 +126,34 @@ trait TraitRepository
         $this->resetModel();
 
         return $this->parserResult($model);
+    }
+
+    /**
+     * Retrieve all data of repository
+     *
+     * @param array $columns
+     *
+     * @return mixed
+     */
+    public function all($columns = ['*'])
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+
+        if ($this->model instanceof Builder) {
+            $results = $this->model->limit(2000)->get($columns);
+        } else {
+            $results = $this->model->limit(2000)->get($columns);
+        }
+
+        $this->resetModel();
+        $this->resetScope();
+
+        return $this->parserResult($results);
+    }
+
+    protected function applyCriteria()
+    {
+        return parent::applyCriteria();
     }
 }

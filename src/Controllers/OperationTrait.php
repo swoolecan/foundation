@@ -11,8 +11,9 @@ trait OperationTrait
         $simpleResult = $params['simple_result'] ?? false;
         
         $repository = $this->getRepositoryObj();
+        $repository->currentScene = $scene;
         $repository = $this->dealCriteria($scene, $repository, $params);
-        if (in_array($scene, ['list', 'pop'])) {
+        if (in_array($scene, $this->pageScenes())) {
             $perPage = $params['per_page'] ?? 25;
             $list = $repository->paginate(intval($perPage));
         } else {
@@ -21,6 +22,11 @@ trait OperationTrait
 
         $collection = $this->getCollectionObj(null, ['resource' => $list, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
         return $collection->toResponse($this->request);
+    }
+
+    protected function pageScenes()
+    {
+        return ['list', 'pop'];
     }
 
     public function listinfoTree()
@@ -37,34 +43,49 @@ trait OperationTrait
     public function addGeneral()
     {
         $repository = $this->getRepositoryObj();
-        $request = $this->getPointRequest('add', $repository);
-        $scene = $request->input('point_scene');
+
+        list($pointScene, $sourceData, $data) = $this->_addFormatData($repository);
+        $result = $repository->create($data);
+        $this->getServiceObj('passport-managerPermission')->writeManagerLog($sourceData);
+        return $this->success($result);
+    }
+
+    protected function _addFormatData($repository)
+    {
+        $scene = $this->request->input('point_scene') ?? 'add';
         if ($scene == 'get_formelem') {
             return $this->success(['formFields' => $repository->getFormatFormFields('add'), 'fieldNames' => $repository->getAttributeNames('add')]);
         }
-        $data = $request->getInputDatas('add');
-        $data = $request->filterDirtyData($data);
-        $result = $repository->create($data);
-        return $this->success($result);
+
+        $request = $this->getPointRequest($scene, $repository);
+        $sourceData = $request->getInputDatas($scene);
+        $data = $request->filterDirtyData($sourceData);
+        return [$scene, $sourceData, $data];
     }
 
     public function updateGeneral()
     {
         $repository = $this->getRepositoryObj();
-        $request = $this->getPointRequest('update', $repository);
-        $scene = $request->input('point_scene');
+        $scene = $this->request->input('point_scene') ?? 'update';
+        $request = $this->getPointRequest($scene, $repository);
         if ($scene == 'get_formelem') {
             return $this->success($repository->getFormatFormFields('add'));
         }
+        $repository->currentScene = $scene;
         $info = $this->getPointInfo($repository, $request);
-
-        $data = $request->getInputDatas('update');
+        $data = $request->getInputDatas($scene);
         if (empty($data) && empty($request->allowEmpty)) {
             return $this->resource->throwException(422, '没有输入参数');
         }
-        $data = $request->validated();
-        $data = $request->filterDirtyData($data);
+        $checkInfo = $request->checkInfo($info, $data);
+        if ($checkInfo !== true) {
+            return $this->resource->throwException(422, $checkInfo['message']);
+        }
+        $sourceData = $request->validated();
+        $data = $request->filterDirtyData($sourceData);
         $result = $repository->updateInfo($info, $data);
+
+        $this->getServiceObj('passport-managerPermission')->writeManagerLog($sourceData, $info->toArray());
         return $this->success([]);
     }
 
@@ -107,16 +128,23 @@ trait OperationTrait
                 }
                 //$info->delete();
                 $result = $repository->deleteInfo($info, $number);
-                $number += $result ? 1 :0;
+                if ($result) {
+                    $number += 1;
+                    $deleteDatas[] = $info->toArray();
+                }
             }
         } else {
             $result = $repository->deleteInfo($info, $number);
             $number = 1;
             $number = $result ? 1 :0;
+            if ($result) {
+                $deleteDatas = $info->toArray();
+            }
         }
 
         //$result->permissions;
         if ($number) {
+            $this->getServiceObj('passport-managerPermission')->writeManagerLog($deleteDatas);
             return $this->success(['message' => "成功删除了{$number}条信息"]);
         }
         return $this->error(400, '删除失败');
@@ -124,7 +152,7 @@ trait OperationTrait
 
     protected function getPointInfo($repository, $request, $routeParam = true, $throw = true)
     {
-        $repository = $this->getRepositoryObj();
+        //$repository = $this->getRepositoryObj();
         $pointKey = $request->input('point_Key', false);
         $key = $pointKey ? $pointKey : $repository->getKeyName();
         //$value = $routeParam ? $request->route($key) : $request->input($key);
@@ -134,7 +162,6 @@ trait OperationTrait
         }
         $info = $repository->find($value);
         if (empty($info)) {
-            \Log::info('aaaa' . serialize($request->all()));
             return $throw ? $this->resource->throwException(404, '信息不存在') : false;
         }
 

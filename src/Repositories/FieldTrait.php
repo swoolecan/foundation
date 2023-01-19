@@ -48,6 +48,9 @@ trait FieldTrait
             'ftitle' =>['name' => '头衔', 'width' => '100'],
             'birthday' =>['name' => '出生日期', 'width' => '100'],
             'deathday' =>['name' => '去世日期', 'width' => '100'],
+            'status' => ['name' => '状态'],
+            'updated_at' => ['name' => '更新时间'],
+            'created_at' => ['name' => '创建时间'],
         ], $this->_getFieldOptions());
     }
 

@@ -8,13 +8,11 @@ use Carbon\Carbon;
 
 class DatetimeTool
 {
-    public function getNow()
+    static public function getCarbonObj($string = null)
     {
-        return Carbon::now();
-    }
-    
-    public function getCarbonObj($string)
-    {
+        if (is_null($string)) {
+            return Carbon::now();
+        }
         return Carbon::parse($string);
     }
 }

@@ -10,6 +10,7 @@ trait SearchFieldTrait
     {
         $fields = $this->getSceneFields($scene . 'Search');
         $this->criteria = $this->criteria->make([]);
+        $fields = $this->dealExtFields($fields, $scene, $params);
 
         $sortElem = !isset($params['sort_elem']) || empty($params['sort_elem']) ? false : json_decode($params['sort_elem'], true);
         $criteriaClass = '\Framework\Baseapp\Criteria\SortCriteria';
@@ -26,7 +27,14 @@ trait SearchFieldTrait
             $defaultSearchField = $defaultSearchFields[$field] ?? [];
             $showField = $showFields[$field] ?? [];
             $data = array_merge($defaultSearchField, $showField);
-            if ((!isset($params[$field]) || $params[$field] === '') && !isset($data['value'])) {
+            //if ((!isset($params[$field]) || $params[$field] === '') && !isset($data['value'])) {
+            if ((!isset($params[$field])) && !isset($data['value'])) {
+                continue;
+            }
+            if (empty($params[$field]) && $params[$field] != '0' && !isset($data['allowEmpty'])) {
+                continue;
+            }
+            if (isset($data['ignore']) && $data['ignore']) {
                 continue;
             }
             $data['field'] = $data['field'] ?? $field;
@@ -36,9 +44,9 @@ trait SearchFieldTrait
             //$datas[$field] = $data;
             $type = $data['type'] ?? 'common';
             $type = ucfirst($type);
-
             $criteriaClass = "\Framework\Baseapp\Criteria\\{$type}Criteria";
             $this->pushCriteria(new $criteriaClass($data));
+
             //$repository->pushCriteria($criteria);
         }
 
@@ -111,5 +119,10 @@ trait SearchFieldTrait
     public function getSearchFields()
     {
         return [];
+    }
+
+    public function dealExtFields($fields, $scene, & $params)
+    {
+        return $fields;
     }
 }

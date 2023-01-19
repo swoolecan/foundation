@@ -78,8 +78,8 @@ trait TraitResource
         return $this->getRepository()->getFormatShowFields('pop', $this->resource, $this->getSimpleResult());
     }
 
-    protected function _listArray()
+    protected function _listArray($pointScene = 'list')
     {
-        return $this->getRepository()->getFormatShowFields('list', $this->resource, $this->getSimpleResult());
+        return $this->getRepository()->getFormatShowFields($pointScene, $this->resource, $this->getSimpleResult());
     }
 }

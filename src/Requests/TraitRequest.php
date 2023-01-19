@@ -110,4 +110,9 @@ trait TraitRequest
     {
         return [];
     }
+
+    public function checkInfo($info, $data)
+    {
+        return true;
+    }
 }

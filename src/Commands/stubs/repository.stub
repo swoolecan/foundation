@@ -9,7 +9,7 @@ class %CLASS% extends AbstractRepository
     protected function _sceneFields()
     {
         return [
-            'list' => ['id', 'name'],
+            'list' => [%FIELDSTR%],
             'listSearch' => ['id', 'name'],
             'add' => ['name'],
             'update' => ['name'],
