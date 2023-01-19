@@ -81,4 +81,15 @@ class CommonTool
         }
         return $datas;
     }
+
+    public static function getPathFiles($path)
+    {
+        $files = scandir($path);
+        foreach ($files as $key => $file) {
+            if (in_array($file, ['.', '..'])) {
+                unset($files[$key]);
+            }
+        }
+        return $files;
+    }
 }
