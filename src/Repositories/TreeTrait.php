@@ -9,7 +9,8 @@ trait TreeTrait
     public function getPointTreeDatas($resource = null, $level = 2, $type = 'keyvalue', $isArray = true, $simple = true)
     {
         $resource = is_null($resource) ? $this->resource->getResourceCode(get_called_class()) : $resource;
-        $app = $this->config->get('app_code');
+        //$app = $this->config->get('app_code');
+        $app = $this->getAppcode();
         return $this->_pointTreeDatas($app, $resource, $level, $type, $isArray, $simple);
     }
 

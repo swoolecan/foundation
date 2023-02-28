@@ -28,7 +28,7 @@ trait TraitRequest
         }
 
         $data = [];
-        $fields = $this->getRepository()->getSceneFields('update');
+        $fields = $this->getRepository()->getSceneFields($scene);
         foreach ($fields as $field) {
             $data[$field] = [];
         }

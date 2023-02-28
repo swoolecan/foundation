@@ -68,9 +68,7 @@ trait ShowFieldTrait
                 $value = $extInfo['show'];
                 $data['valueSource'] = $extInfo['source'];
             } elseif ($valueType == 'file') {
-                $resource = $data['resource'] ?? $this->resource->getResourceCode(get_called_class(), false);
-                $key = $model->getKeyField();
-                $value = $this->getAttachmentInfos(['app' => $this->getAppcode(), 'info_table' => $resource, 'info_field' =>$field, 'info_id' => $model->$key]);
+                $value = $model->getAttachmentInfos(['info_field' =>$field]);
                 $data['valueSource'] = [];
                 if (!empty($value)) {
                     foreach ($value as $fileDetail) {
