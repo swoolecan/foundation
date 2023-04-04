@@ -32,7 +32,7 @@ trait DataTrait
     {
         $repository = is_null($resource) ? $this : $this->getRepositoryObj($resource);
         $datas = $repository->findWhere($where);
-        $collection = $this->getCollectionObj($resource, ['resource' => $datas, 'scene' => $scene, 'repository' => $repository]);
+        $collection = $this->getCollectionObj($datas, $scene, $resource);
         return $collection->toArray();
     }
 }

@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Resources;
 
+use Swoolecan\Foundation\Helpers\TraitResourceManager;
+
 trait TraitCollection
 {
+    use TraitResourceManager;
     protected $_scene = 'list';
     protected $_model;
     protected $repository;
@@ -17,10 +20,11 @@ trait TraitCollection
      *
      * @param mixed $resource
      */
-    public function __construct($params = [])//$resource, $scene, $repository, $simpleResult = false)
+    public function __construct($params = [])
     {
         $this->setScene($params['scene']);
-        $this->repository = $params['repository'];
+        //$this->repository = $params['repository'];
+        $this->repository = $this->getRepositoryObj();
         $this->simpleResult = $params['simpleResult'] ?? false;
         parent::__construct($params['resource']);
     }
@@ -121,7 +125,7 @@ trait TraitCollection
     public function getModel()
     {
         if (empty($this->_model)) {
-            $this->_model = $this->repository->getModelObj();
+            $this->_model = $this->getModelObj();
         }
         return $this->_model;
         //return $this->_model ?? $this->collection->first();

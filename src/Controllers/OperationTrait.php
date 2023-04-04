@@ -20,7 +20,8 @@ trait OperationTrait
             $list = $repository->all();
         }
 
-        $collection = $this->getCollectionObj(null, ['resource' => $list, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
+        //$collection = $this->getCollectionObj(null, ['resource' => $list, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
+        $collection = $this->getCollectionObj($list, $scene, null, $simpleResult);
         return $collection->toResponse($this->request);
     }
 
@@ -97,7 +98,7 @@ trait OperationTrait
 
         $scene = $params['point_scene'] ?? 'view';
         $simpleResult = $params['simple_result'] ?? false;
-        $resource = $this->getResourceObj(null, ['resource' => $info, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
+        $resource = $this->getResourceObj($info, $scene);
         return $resource->toResponse($request);
     }
 
@@ -107,7 +108,7 @@ trait OperationTrait
         $request = $this->getPointRequest('', $repository);
         $params = $request->all();
         $info = $this->getPointInfo($repository, $request, false);
-        $resource = $this->getResourceObj(null, ['resource' => $info, 'scene' => 'frontDetail', 'repository' => $repository, 'simpleResult' => false]);
+        $resource = $this->getResourceObj($info, 'frontDetail');
         return $resource->toResponse($request);
     }
 
