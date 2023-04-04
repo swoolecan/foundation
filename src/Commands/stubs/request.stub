@@ -9,7 +9,6 @@ class %CLASS% extends AbstractRequest
     protected function _updateRule()
     {
         return [
-            'id' => ['bail', 'required', 'exists'],
         ];
     }
 

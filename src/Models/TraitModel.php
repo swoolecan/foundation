@@ -99,4 +99,17 @@ trait TraitModel
         }
         return $datas;
     }
+
+    public function addNotExist($data, $fields)
+    {
+        $where = [];
+        foreach ($fields as $field) {
+            $where[$field] = $data[$field];
+        }
+        $exist = $this->where($where)->first();
+        if ($exist) {
+            return $exist;
+        }
+        return $this->create($data);
+    }
 }

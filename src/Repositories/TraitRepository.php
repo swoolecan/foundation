@@ -156,15 +156,4 @@ trait TraitRepository
     {
         return parent::applyCriteria();
     }
-
-    public function formatTagShow($model, $field)
-    {
-        $infos = $model->getTagInfoDatas([]);
-        $str = '';
-        foreach ($infos as $info) {
-            $str .= $info['name'] . ' ; ';
-        }
-        $str = rtrim($str, ' ; ');
-        return $str;
-    }
 }

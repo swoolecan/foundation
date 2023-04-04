@@ -46,7 +46,7 @@ trait CommonDataTrait
         }
 
         if ($currentAppcode == 'passport') {
-            $tagInfo = $this->getResource()->getObject('repository', 'tagInfo');
+            $tagInfo = $this->getResource()->getObject('model', 'tagInfo');
             return $tagInfo->getDatas($params);
         }
 
@@ -106,5 +106,24 @@ trait CommonDataTrait
     {
         $info = $this->getModelObj('passport-tag')->findCreate($name);
         return $onlyCode ? $info->code : $info;
+    }
+
+    public function formatTagDatas($returnType = null)
+    {
+        $tagInfos = $this->getTagInfoDatas([]);
+        switch ($returnType) {
+        case 'string':
+        case 'keyvalue':
+            $datas = [];
+            foreach ($tagInfos as $tagInfo) {
+                $datas[$tagInfo['tag_code']] = $tagInfo['name'];
+            }
+            if ($returnType == 'string') {
+                return implode(' ; ', $datas);
+            }
+            return $datas;
+        default:
+            return $tagInfos;
+        }
     }
 }

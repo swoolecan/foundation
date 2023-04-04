@@ -90,11 +90,11 @@ trait ShowFieldTrait
     public function getDefaultShowFields()
     {
         return [
-            //'description' => ['showType' => 'popover', 'valueType' => 'popover'],
-            'description' => ['showType' => 'edit'],
+            'description' => ['showType' => 'popover', 'valueType' => 'popover'],
+            //'description' => ['showType' => 'edit'],
             'publish_at' => ['showType' => 'edit'],
             'status' => ['valueType' => 'key'],
-            'orderlist' => ['showType' => 'edit'],
+            //'orderlist' => ['showType' => 'edit'],
             'url' => ['valueType' => 'link', 'showName' => 'URL'],
             'baidu_url' => ['valueType' => 'link', 'showName' => '百度百科'],
             'wiki_url' => ['valueType' => 'link', 'showName' => '维基百科'],

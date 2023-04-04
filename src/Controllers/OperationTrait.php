@@ -31,7 +31,6 @@ trait OperationTrait
 
     public function listinfoTree()
     {
-        $resource = $this->resource->getResourceCode(get_called_class());
         $repository = $this->getRepositoryObj();
         $data = $repository->getTreeLists();
         $data['code'] = 200;

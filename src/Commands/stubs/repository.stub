@@ -26,14 +26,14 @@ class %CLASS% extends AbstractRepository
     public function getSearchFields()
     {
         return [
-            //'type' => ['type' => 'select', 'infos' => $this->getKeyValues('type')],
+            //'type' => ['type' => 'select'],
         ];
     }
 
     public function getFormFields()
     {
         return [
-            //'type' => ['type' => 'select', 'infos' => $this->getKeyValues('type')],
+            //'type' => ['type' => 'select'],
         ];
     }
 
