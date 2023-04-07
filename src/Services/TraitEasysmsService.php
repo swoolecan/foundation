@@ -118,7 +118,7 @@ trait TraitEasysmsService
 
         $code = '';
         for($i = 0; $i < $length; $i++) {
-            $code .= $this->getConfig('isTest') ? 1 : mt_rand(0, 9);
+            $code .= mt_rand(0, 9);
         }
 
         if (!empty($infoExist) && date('Ymd', $infoExist['createdAt']) != date('Ymd', time())) {

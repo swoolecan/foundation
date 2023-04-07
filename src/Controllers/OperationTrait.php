@@ -66,13 +66,15 @@ trait OperationTrait
     public function updateGeneral()
     {
         $repository = $this->getRepositoryObj();
-        $scene = $this->request->input('point_scene') ?? 'update';
+        $scene = $this->request->input('point_scene')??'update';
         $request = $this->getPointRequest($scene, $repository);
         if ($scene == 'get_formelem') {
             return $this->success($repository->getFormatFormFields('add'));
         }
         $repository->currentScene = $scene;
         $info = $this->getPointInfo($repository, $request);
+        $dataPre = $info->toArray();
+        \Log::debug('uuuuuuu-' . json_encode($info->toArray()));
         $data = $request->getInputDatas($scene);
         if (empty($data) && empty($request->allowEmpty)) {
             return $this->resource->throwException(422, '没有输入参数');
@@ -82,10 +84,11 @@ trait OperationTrait
             return $this->resource->throwException(422, $checkInfo['message']);
         }
         $sourceData = $request->validated();
+        \Log::debug('uuuuuuuuuuuuaaa-' . serialize($sourceData));
         $data = $request->filterDirtyData($sourceData);
         $result = $repository->updateInfo($info, $data);
 
-        $this->getServiceObj('passport-managerPermission')->writeManagerLog($sourceData, $info->toArray());
+        $this->getServiceObj('passport-managerPermission')->writeManagerLog($sourceData, $dataPre);
         return $this->success([]);
     }
 
@@ -162,6 +165,7 @@ trait OperationTrait
         }
         $info = $repository->find($value);
         if (empty($info)) {
+            \Log::info('aaaa' . serialize($request->all()));
             return $throw ? $this->resource->throwException(404, '信息不存在') : false;
         }
 
@@ -179,5 +183,23 @@ trait OperationTrait
     public function allowMulDelete()
     {
         return true;
+    }
+
+    public function other()
+    {
+        $repository = $this->getRepositoryObj();
+        $scene = $this->request->input('point_scene')??'other';
+        $request = $this->getPointRequest($scene, $repository);
+        /*if ($scene == 'get_formelem') {
+            return $this->success($repository->getFormatFormFields('add'));
+        }*/
+        //$info = $this->getPointInfo($repository, $request);
+        //\Log::debug('uuuuuuu-' . json_encode($info->toArray()));
+        $sourceData = $request->getInputDatas($scene);
+        $data = $request->filterDirtyData($sourceData);
+        $result = $repository->editInfo($data,$scene);
+
+        $this->getServiceObj('passport-managerPermission')->writeManagerLog($sourceData);
+        return $this->success($result['data']??[],$result['message']??'');
     }
 }

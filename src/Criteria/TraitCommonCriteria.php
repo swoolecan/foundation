@@ -24,7 +24,7 @@ trait TraitCommonCriteria
         }
         
         $query = $query->where($field, $operator, $value);
-        //echo $query->toSql() . '=======';
+        //\Log::info('ssss-' . $query->toSql() . '=======');
 
         return $query;
     }
