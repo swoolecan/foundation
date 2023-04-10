@@ -18,11 +18,11 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^7.0.1",
-        "jenssegers/agent": "^2.6",
-        "overtrue/easy-sms": "^1.1",
-        "overtrue/wechat": "^5.0",
-        "php": "^7.3"
+        "guzzlehttp/guzzle": "^7.5.0",
+        "jenssegers/agent": "^2.6.4",
+        "overtrue/easy-sms": "^2.4.1",
+        "w7corp/easywechat": "^2.1.41",
+        "php": "^8.2"
     },
     "autoload": {
         "psr-4": {
