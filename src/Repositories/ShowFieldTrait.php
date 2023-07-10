@@ -25,12 +25,13 @@ trait ShowFieldTrait
                 $datas[$field] = $simple ? $value : ['showType' => 'common', 'value' => $value, 'valueSource' => $value];
                 continue ;
             }
-
             $data['valueSource'] = $value;
             $data['showType'] = $data['showType'] ?? 'common';
             $valueType = $data['valueType'] ?? 'self';
 
-            if ($valueType == 'key') {
+            if ($valueType == 'pointkey') {
+                $value = !isset($data['infos']) ? $model->$field : ($data['infos'][$model->$field] ?? $model->$field);
+            } elseif ($valueType == 'key') {
                 $value = $this->getKeyValues($field, $model->$field);
             } elseif ($valueType == 'select') {
                 $value = $this->getKeyValues($field);
@@ -83,21 +84,28 @@ trait ShowFieldTrait
                 $value = $this->resource->strOperation($value, 'substr', ['start' => 0, 'length' => $strLen]) . $suffix; 
             }
             $data['value'] = $value;
+            if (isset($data['showCopy']) && !empty($data['showCopy'])) {
+                $data['copyValue'] = $this->getPointCopyValue($model, $field);
+            }
             $datas[$field] = $simple ? $value : $data;
         }
 
         return $datas;
     }
 
+    public function getPointCopyValue($model, $field)
+    {
+        return $model->$field;
+    }
+
     public function getDefaultShowFields()
     {
         return [
             //'description' => ['showType' => 'popover', 'valueType' => 'popover'],
-            'description' => ['showType' => 'edit'],
+            //'description' => ['showType' => 'edit'],
             'publish_at' => ['showType' => 'edit'],
             'status' => ['valueType' => 'key'],
-            'orderlist' => ['showType' => 'edit'],
-            'url' => ['valueType' => 'link', 'showName' => 'URL'],
+            //'orderlist' => ['showType' => 'edit'],
             'baidu_url' => ['valueType' => 'link', 'showName' => '百度百科'],
             'wiki_url' => ['valueType' => 'link', 'showName' => '维基百科'],
             //'baidu_url' => ['showType' => 'edit'],

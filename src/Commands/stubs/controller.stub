@@ -6,4 +6,70 @@ namespace %NAMESPACE%;
 
 class %CLASS% extends AbstractController
 {
+    /**
+     * @group liuliu-六六写字新后台2.1.12
+     *
+     * vr-l 课节资源列表
+     *
+     * @queryParam id optional int id
+     * @queryParam created_at optional string 创建时间 2022-01-01 00:00:00|2022-01-01 00:00:00
+     *
+     * @responseFile responses/backend/video-resource-list.json
+     */
+    public function listinfoGeneral()
+    {
+        return Parent::listinfoGeneral();
+    }
+
+    /**
+     * @group liuliu2112-六六写字新后台2.1.12
+     *
+     * vr-a 添加
+     *
+     * @bodyParam video_id required int 课节ID
+     *
+     * @response 200 {
+     * "code": 200,
+     * "message": "OK",
+     * "data": {}
+     * }
+     */
+    public function addGeneral()
+    {
+        return Parent::addGeneral();
+    }
+
+    /**
+     * @group liuliu2112-六六写字新后台2.1.12
+     *
+     * vr-u 编辑
+     *
+     * @bodyParam resource_id required int 资源ID
+     *
+     * @response 200 {
+     * "code": 200,
+     * "message": "OK",
+     * "data": {}
+     * }
+     */
+    public function updateGeneral()
+    {
+        return Parent::updateGeneral();
+    }
+
+    /**
+     * @group liuliu2112-六六写字新后台2.1.12
+     *
+     * vr-d 删除
+     *
+     * @response 200 {
+     * "code": 200,
+     * "message": "OK",
+     * "data": {}
+     * }
+     */
+    public function deleteGeneral()
+    {
+        return Parent::deleteGeneral();
+    }
 }

@@ -13,7 +13,7 @@ trait TraitModel
         0 => '禁用',
         1 => '正常'
     ];
-    
+
     public function getFormatState($key = 0, $enum = array(), $default = '')
     {
         return array_key_exists($key, $enum) ? $enum[$key] : $default;

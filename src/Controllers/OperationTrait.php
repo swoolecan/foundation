@@ -9,7 +9,7 @@ trait OperationTrait
         $params = $this->request->all();
         $scene = $params['point_scene'] ?? 'list';
         $simpleResult = $params['simple_result'] ?? false;
-        
+
         $repository = $this->getRepositoryObj();
         $repository->currentScene = $scene;
         $repository = $this->dealCriteria($scene, $repository, $params);
@@ -84,7 +84,9 @@ trait OperationTrait
             return $this->resource->throwException(422, $checkInfo['message']);
         }
         $sourceData = $request->validated();
-        \Log::debug('uuuuuuuuuuuuaaa-' . serialize($sourceData));
+        $infoSourceData = $sourceData;
+        unset($infoSourceData['file']);
+        \Log::debug('uuuuuuuuuuuuaaa-' . serialize($infoSourceData));
         $data = $request->filterDirtyData($sourceData);
         $result = $repository->updateInfo($info, $data);
 
@@ -163,7 +165,8 @@ trait OperationTrait
         if (empty($key)) {
             return $throw ? $this->resource->throwException(422, '参数有误') : false;
         }
-        $info = $repository->find($value);
+        //$info = $repository->find($value);
+        $info = $repository->where($key, $value)->first();
         if (empty($info)) {
             \Log::info('aaaa' . serialize($request->all()));
             return $throw ? $this->resource->throwException(404, '信息不存在') : false;

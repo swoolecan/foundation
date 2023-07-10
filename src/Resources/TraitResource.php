@@ -82,4 +82,9 @@ trait TraitResource
     {
         return $this->getRepository()->getFormatShowFields($pointScene, $this->resource, $this->getSimpleResult());
     }
+
+    protected function _processArray()
+    {
+        return $this->getRepository()->getFormatShowFields('process', $this->resource, $this->getSimpleResult());
+    }
 }

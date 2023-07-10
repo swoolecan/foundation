@@ -10,7 +10,7 @@ class CommonTool
 {
     use TraitToolSpell;
 
-    public static function generateUniqueString($length = 6)
+    public static function generateUniqueString($length = 6, $withPre = false)
     {
         // 字符集，可任意添加你需要的字符
         //$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_ []{}<>~`+=,.;:/?|';
@@ -22,6 +22,9 @@ class CommonTool
             // 第二种是取字符数组$chars 的任意元素
             // $string .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
             $string .= $chars[mt_rand(0, strlen($chars) - 1)];
+        }
+        if (empty($withPre)) {
+            return $string;
         }
         return strtolower(base_convert(time() - 1420070400, 10, 36)) . $string;
     }

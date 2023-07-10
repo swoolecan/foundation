@@ -27,11 +27,11 @@ trait TreeTrait
 
         foreach ($datas as & $data) {
             $subInfos = $model->where($parentField, $data[$keyField])->get();
-            $subDatas = $this->formatResultInfos($subInfos, $keyField, $type, $simple, $isArray); 
+            $subDatas = $this->formatResultInfos($subInfos, $keyField, $type, $simple, $isArray);
             if ($level > 2) {
                 foreach ($subDatas as & $subData) {
                     $thirdInfos = $model->where($parentField, $subData[$keyField])->get();
-                    $thirdDatas = $this->formatResultInfos($thirdInfos, $keyField, $type, $simple, $isArray); 
+                    $thirdDatas = $this->formatResultInfos($thirdInfos, $keyField, $type, $simple, $isArray);
                     $subData['subInfos'] = $thirdDatas;
                 }
             }
@@ -93,10 +93,10 @@ trait TreeTrait
     }
 
     public function _formatTreeDatas($infos, $key, $parentKey, $parent, $type = 'list', $forceArray = true, $simple = false)
-    { 
+    {
         $datas = [];
-        foreach ($infos as $iKey => $info) { 
-            //$info = $iValue->toArray();    
+        foreach ($infos as $iKey => $info) {
+            //$info = $iValue->toArray();
             if ($info[$parentKey] == $parent) {
                 unset($infos[$iKey]);
                 $formatInfo = $this->getFormatShowFields($type, $info, $simple);
@@ -108,11 +108,11 @@ trait TreeTrait
                 if ($forceArray) {
                     $datas[] = $formatInfo;
                 } else {
-                    $datas[$info[$key]] = $formatInfo;   
+                    $datas[$info[$key]] = $formatInfo;
                 }
             }
         }
-        return $datas;        
+        return $datas;
     }
 
     public function getInfosForTree($orderField = 'orderlist')
