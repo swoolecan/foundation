@@ -30,7 +30,9 @@ trait ShowFieldTrait
             $data['showType'] = $data['showType'] ?? 'common';
             $valueType = $data['valueType'] ?? 'self';
 
-            if ($valueType == 'key') {
+            if ($valueType == 'pointkey') {
+                $value = !isset($data['infos']) ? $model->$field : ($data['infos'][$model->$field] ?? $model->$field);
+            } elseif ($valueType == 'key') {
                 $value = $this->getKeyValues($field, $model->$field);
             } elseif ($valueType == 'select') {
                 $value = $this->getKeyValues($field);
@@ -81,10 +83,18 @@ trait ShowFieldTrait
                 $value = $this->resource->strOperation($value, 'substr', ['start' => 0, 'length' => $strLen]) . $suffix; 
             }
             $data['value'] = $value;
+            if (isset($data['showCopy']) && !empty($data['showCopy'])) {
+                $data['copyValue'] = $this->getPointCopyValue($model, $field);
+            }
             $datas[$field] = $simple ? $value : $data;
         }
 
         return $datas;
+    }
+
+    public function getPointCopyValue($model, $field)
+    {
+        return $model->$field;
     }
 
     public function getDefaultShowFields()
