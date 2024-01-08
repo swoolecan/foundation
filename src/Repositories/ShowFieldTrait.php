@@ -13,8 +13,12 @@ trait ShowFieldTrait
         $showFields = $this->getShowFields();
         $datas = [];
         foreach ($fields as $field) {
-            if ($field == 'point_operation') {
+            if (in_array($field, ['point_operation'])) {
                 $datas[$field] = $this->getPointOperation($model, $field);
+                continue;
+            }
+            if (in_array($field, ['point_operation_second'])) {
+                $datas[$field] = $this->getPointOperationSecond($model, $field);
                 continue;
             }
             $value = $model->$field;
@@ -25,14 +29,15 @@ trait ShowFieldTrait
                 $datas[$field] = $simple ? $value : ['showType' => 'common', 'value' => $value, 'valueSource' => $value];
                 continue ;
             }
+
             $data['valueSource'] = $value;
             $data['showType'] = $data['showType'] ?? 'common';
             $valueType = $data['valueType'] ?? 'self';
 
-            if ($valueType == 'pointkey') {
-                $value = !isset($data['infos']) ? $model->$field : ($data['infos'][$model->$field] ?? $model->$field);
-            } elseif ($valueType == 'key') {
+            if ($valueType == 'key') {
                 $value = $this->getKeyValues($field, $model->$field);
+            } elseif ($valueType == 'radio') {
+                $value = $this->getKeyValues($field);
             } elseif ($valueType == 'select') {
                 $value = $this->getKeyValues($field);
             } elseif ($valueType == 'link') {
@@ -57,7 +62,10 @@ trait ShowFieldTrait
                 $method = $data['method'];
                 $value = $this->$method($model, $field);
             } elseif ($valueType == 'datetime') {
-                $value = empty($model->$field) ? '' : $model->$field->toDateTimeString();
+                $value = '';
+                if (!empty($model->$field)) {
+                    $value = $carbonObj = is_string($model->$field) ? $model->$field : $model->$field->toDateTimeString();
+                }
                 $data['valueSource'] = $value;
             } elseif ($valueType == 'region') {
                 $value = $this->getRegionData($model->$field, true);
@@ -82,24 +90,16 @@ trait ShowFieldTrait
                 $value = $this->resource->strOperation($value, 'substr', ['start' => 0, 'length' => $strLen]) . $suffix; 
             }
             $data['value'] = $value;
-            if (isset($data['showCopy']) && !empty($data['showCopy'])) {
-                $data['copyValue'] = $this->getPointCopyValue($model, $field);
-            }
             $datas[$field] = $simple ? $value : $data;
         }
 
         return $datas;
     }
 
-    public function getPointCopyValue($model, $field)
-    {
-        return $model->$field;
-    }
-
     public function getDefaultShowFields()
     {
         return [
-            //'description' => ['showType' => 'popover', 'valueType' => 'popover'],
+            'description' => ['showType' => 'popover', 'valueType' => 'popover'],
             //'description' => ['showType' => 'edit'],
             'publish_at' => ['showType' => 'edit'],
             'status' => ['valueType' => 'key'],
@@ -121,10 +121,25 @@ trait ShowFieldTrait
             'updated_at' => ['valueType' => 'datetime'],
             'user_id' => ['valueType' => 'point', 'relate' => 'user'],
             'region_code' => ['valueType' => 'rpc', 'relate' => 'region', 'app' => 'passport', 'keyField' => 'code'],
+
+            'material_code_format' => ['valueType' => 'callback', 'method' => 'materialCodeJump'],
         ];
     }
 
     public function getShowFields()
+    {
+        return [];
+    }
+
+    public function getPointOperationSecond($model, $field)
+    {
+        return [
+            'showType' => 'operation',
+            'operations' => $this->_pointOperationSeconds($model, $field),
+        ];
+    }
+
+    protected function _pointOperationSeconds($model, $field)
     {
         return [];
     }

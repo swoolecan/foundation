@@ -44,13 +44,41 @@ trait FieldTrait
             'cover' =>['width' => '150'],
             'title' => ['width' => '200', 'rowNum' => 1, 'withPop' => 1],
             'created_at' => ['width' => '160'],
-            'point_operation' => ['width' => '160', 'name' => '特定操作'],
+            'point_operation' => ['width' => '160', 'name' => '特定操作', 'nosort' => 1],
             'ftitle' =>['name' => '头衔', 'width' => '100'],
             'birthday' =>['name' => '出生日期', 'width' => '100'],
             'deathday' =>['name' => '去世日期', 'width' => '100'],
             'status' => ['name' => '状态'],
             'updated_at' => ['name' => '更新时间'],
             'created_at' => ['name' => '创建时间'],
+            'password' => ['name' => '密码', 'hidden' => 1],
+            'password_confirmation' => ['name' => '确认密码', 'hidden' => 1],
+            'note' => ['name' => '备注'],
+            'import_file' => ['name' => '导入文件'],
+
+            'total_number' => ['name' => '库存总数量'],
+            'reserved_number' => ['name' => '当前库存占用数量'],
+            'out_number' => ['name' => '本次取货数量'],
+            'material_number' => ['name' => '货品数量', 'width' => '60'],
+            'locker_code' => ['name' => '料箱代码'],
+            'material_name' => ['name' => '货品名称', 'nosort' => 1],
+            'material_barcode' => ['name' => '货品条码', 'nosort' => 1],
+            'add_number' => ['name' => '新增数量'],
+            'new_number' => ['name' => '调整后数量'],
+            'receipt_type' => ['name' => '入库类型'],
+            'agv_number' => ['name' => 'AGV数量'],
+            'locker_number' => ['name' => '料箱数量'],
+            'workstation_code_target' => ['name' => '前往工作站'],
+            'workstation_code_current' => ['name' => '取货工作站'],
+            'workstation_code' => ['name' => '工作站代码'],
+            'material_picture' => ['name' => '图示', 'nosort' => 1],
+            'material_code_format' => ['name' => '货品编号', 'nosort' => 1],
+            'occupy_number' => ['name' => '占用数'],
+            'fetch_zone' => ['name' => '取货货位'],
+            'workstation_number' => ['name' => '工作站编号', 'width' => '120'],
+            'inventory_yesterday' => ['name' => '昨日库存'],
+            'other_area' => ['name' => '取货库位'],
+            //'' => ['name' => ''],
         ], $this->_getFieldOptions());
     }
 
@@ -62,6 +90,11 @@ trait FieldTrait
     protected function extAttributeNames()
     {
         return [];
+    }
+
+    public function getIgnoreOperations($scene)
+    {
+        return $this->getSceneFields($scene . 'IgnoreOperation');
     }
 
     public function getSceneFields($scene = null)

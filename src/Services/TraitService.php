@@ -23,7 +23,7 @@ trait TraitService
     }
 
     public function __call($name, $arguments)
-    {
+    {   
         return $this->repository->{$name}(...$arguments);
     }
 }

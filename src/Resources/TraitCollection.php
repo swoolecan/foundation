@@ -85,6 +85,9 @@ trait TraitCollection
             'fieldNames' => $this->repository->getAttributeNames('list'),
             'addFormFields' => $addFormFields ? $addFormFields : (object)[],
             'updateFormFields' => $updateFormFields ? $updateFormFields : (object)[],
+            'updateFormTitleField' => 'name',
+            'updateFormTitle' => '',
+            'addFormTitle' => '添加',
         ];
     }
 
@@ -105,8 +108,8 @@ trait TraitCollection
 
     protected function _listArray()
     {
-        $addFormFields = $this->repository->getFormatFormFields('add');
-        $updateFormFields = $this->repository->getFormatFormFields('update');
+        //$addFormFields = $this->repository->getFormatFormFields('add');
+        //$updateFormFields = $this->repository->getFormatFormFields('update');
         $searchFields = $this->repository->getFormatSearchFields($this->getScene() . 'Search');
         return [
             'data' => $this->collection,
@@ -114,12 +117,28 @@ trait TraitCollection
                 'self' => 'link-value',
             ],
             'fieldNames' => $this->repository->getAttributeNames($this->getScene()),
-            'addFormFields' => $addFormFields ? $addFormFields : (object)[],
-            'updateFormFields' => $updateFormFields ? $updateFormFields : (object)[],
             'searchFields' => $searchFields ? $searchFields : (object)[],
             'haveSelection' => $this->repository->getHaveSelection($this->getScene()),
             'selectionOperations' => $this->repository->getSelectionOperations($this->getScene()),
+            'formInfos' => $this->formatFormInfos(),
+            'ignoreOperations' => $this->repository->getIgnoreOperations($this->getScene()),
+
+            /*'addFormFields' => $addFormFields ? $addFormFields : (object)[],
+            'updateFormFields' => $updateFormFields ? $updateFormFields : (object)[],
+            'updateFormTitleField' => 'name',
+            'updateFormTitle' => '',
+            'addFormTitle' => '添加',*/
         ];
+    }
+
+    protected function formatFormInfos()
+    {
+        $repository = $this->repository;
+        $formElems = $repository->formElems();
+        foreach ($formElems as $elem => & $info) {
+            $info['formFields'] = $repository->getFormatFormFields($elem);
+        }
+        return $formElems;
     }
 
     public function getModel()

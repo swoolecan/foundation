@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Criteria;
@@ -22,9 +22,9 @@ trait TraitCommonCriteria
         } else if ($operator == 'like') {
             $value = "%{$value}%";
         }
-        
+
         $query = $query->where($field, $operator, $value);
-        //\Log::info('ssss-' . $query->toSql() . '=======');
+        //echo $query->toSql() . '=======';
 
         return $query;
     }

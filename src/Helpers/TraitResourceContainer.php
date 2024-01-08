@@ -57,7 +57,6 @@ trait TraitResourceContainer
     {
         $class = $this->getClassName($type, $code);
         if (empty($class)) {
-            \Log::debug('resource-' . '资源不存在-' . $class . '-' . $type . '==' . $code);
             $this->throwException(500, '资源不存在-' . $class . '-' . $type . '==' . $code);
         }
 
@@ -119,7 +118,7 @@ trait TraitResourceContainer
         $codeUpper = $this->strOperation($code, 'studly');//Str::studly($code);
         $elemUpper = $this->strOperation($elem, 'studly');//Str::studly($elem);
         $elemPath = $elem == 'repository' ? 'Repositories' : ($elem == 'collection' ? 'Resources' : "{$elemUpper}s");
-        $app = $app != 'app' && $app != 'double6' ? 'Module' . ucfirst($app) : 'App';
+        $app = $app != 'app' ? 'Module' . ucfirst($app) : 'App';
         $class = "{$app}\\{$elemPath}\\{$codeUpper}";
 
         if (!in_array($elem, ['model', 'resource'])) {

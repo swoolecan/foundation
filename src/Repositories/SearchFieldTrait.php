@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Repositories;
 
@@ -71,6 +71,7 @@ trait SearchFieldTrait
             'region_code' => [],
             'created_at' => ['type' => 'between'],
             'updated_at' => ['type' => 'between'],
+            'locker_code' => ['operator' => 'like'],
         ];
     }
 

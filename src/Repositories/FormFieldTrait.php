@@ -18,8 +18,10 @@ trait FormFieldTrait
             $formField = $formFields[$field] ?? [];
             $data = array_merge($defaultFormField, $formField);
             $data = empty($data) ? ['type' => 'input'] : $data;
+            $data['type']  = $data['type'] ?? 'input';
             if (in_array($data['type'], ['radio', 'select']) && !isset($data['infos'])) {
                 $data['infos'] = (object) $this->getKeyValues($field);
+                //$data['infos'] = $this->getKeyValues($field);
             }
             if (in_array($data['type'], ['file']) && !isset($data['resource'])) {
                 $data['resource'] = $this->resource->getResourceCode(get_called_class(), false);
@@ -44,6 +46,7 @@ trait FormFieldTrait
             'description' => ['type' => 'input', 'typeExt' => 'textarea', 'rows' => 2],
             'user_id' => ['type' => 'selectSearch', 'require' => ['add'], 'searchResource' => 'user', 'searchApp' => 'passport'],
             'status' => ['type' => 'radio'],
+            'birthday' => ['type' => 'datepicker'],
             'thumb' => ['type' => 'file', 'filetype' => 'image', 'minnum' => 1, 'maxnum' => 10],
             'photo' => ['type' => 'file', 'filetype' => 'image', 'minnum' => 1, 'maxnum' => 10],
             'cover' => ['type' => 'file', 'filetype' => 'image', 'minnum' => 1, 'maxnum' => 10],
@@ -52,11 +55,26 @@ trait FormFieldTrait
             'area' => ['type' => 'cascader'],
             //'content' => ['type' => 'editor'],
             'content' => ['type' => 'markdown'],
+            'password' => ['type' => 'input', 'isPassword' => 1],
+            'password_confirmation' => ['type' => 'input', 'isPassword' => 1],
         ];
     }
 
     public function getFormFields()
     {
         return [];
+    }
+
+    public function formElems()
+    {
+        return [
+            'add' => [
+                'title' => '添加',
+            ],
+            'update' => [
+                'title' => '',
+                'titleField' => 'name',
+            ],
+        ];
     }
 }

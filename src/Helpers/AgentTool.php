@@ -18,10 +18,4 @@ class AgentTool
 		$agent = new Agent();
 		return $agent->$code();
 	}
-
-    public static function getDevice()
-    {
-		$agent = new Agent();
-		return $agent->device();
-    }
 }
