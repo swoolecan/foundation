@@ -31,13 +31,25 @@ trait TraitResourceManager
         return $this->getObject('model', $code, $params);
     }
 
-    public function getResourceObj($code = '', $params = [])
+    public function getResourceObj($info, $scene, $code = '', $simpleResult = false)
     {
+        $params = [
+            'resource' => $info, 
+            'scene' => $scene, 
+            //'repository' => $repository, 
+            'simpleResult' => $simpleResult,
+        ];
         return $this->getObject('resource', $code, $params);
     }
 
-    public function getCollectionObj($code = '', $params = [])
+    public function getCollectionObj($infos, $scene, $code = '', $simpleResult = false)
     {
+        $params = [
+            'resource' => $infos, 
+            'scene' => $scene, 
+            //'repository' => $repository, 
+            'simpleResult' => $simpleResult
+        ];
         return $this->getObject('collection', $code, $params);
     }
 
@@ -53,7 +65,7 @@ trait TraitResourceManager
         } else {
             $code = get_called_class();
         }
-        $resource = property_exists($this, 'resource') ? $this->resource : $this->getResource();
+        $resource = method_exists($this, 'getResource') ? $this->getResource() : $this->resource;
         return $resource->getObject($type, $code, $params);
     }
 

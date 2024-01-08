@@ -99,6 +99,7 @@ trait TraitGuzzleService
         }
         $code = $response->getStatusCode();
         $result['pointReturnCode'] = $code;
+        $result['bodyStr'] = $bodyStr;
         return $result;
     }
 

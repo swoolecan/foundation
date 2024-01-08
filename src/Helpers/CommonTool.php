@@ -10,6 +10,11 @@ class CommonTool
 {
     use TraitToolSpell;
 
+	public function getClientDevice()
+	{
+		return AgentTool::getDevice();
+	}
+
     public static function generateUniqueString($length = 6, $withPre = false)
     {
         // 字符集，可任意添加你需要的字符

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Swoolecan\Foundation\Helpers;
 
 use Swoolecan\Foundation\Helpers\AgentTool;
+use Illuminate\Http\JsonResponse;
 
 /**
  * 系统资源
@@ -40,9 +41,12 @@ trait TraitResourceContainer
         $module = lcfirst($module);
         $type = $this->strOperation($type, 'singular');
 
-        $pos = strripos($code, $type);
+        $pos = $type != 'Resource' ? strripos($code, $type) : false;
         if ($pos !== false) {
             $code = substr($code, 0, $pos);
+        }
+        if (strpos($code, 'Collection') !== false) {
+            $code = str_replace('Collection', '', $code);
         }
         //$code = $this->strOperation($code, 'snake', '-');//Str::snake($code, '-');
         $code = lcfirst($code);
@@ -139,8 +143,9 @@ trait TraitResourceContainer
 		return AgentTool::isMobile();
 	}
 
-	public function getClientDevice()
-	{
-		return AgentTool::getDevice();
-	}
+    public function formatResultDatas($datas)
+    {
+        $r = new JsonResponse($datas);
+        return $r->getData(true);
+    }
 }

@@ -69,9 +69,7 @@ trait ShowFieldTrait
                 $value = $extInfo['show'];
                 $data['valueSource'] = $extInfo['source'];
             } elseif ($valueType == 'file') {
-                $resource = $data['resource'] ?? $this->resource->getResourceCode(get_called_class(), false);
-                $key = $model->getKeyField();
-                $value = $this->getAttachmentInfos(['app' => $this->getAppcode(), 'info_table' => $resource, 'info_field' =>$field, 'info_id' => $model->$key]);
+                $value = $model->getAttachmentInfos(['info_field' =>$field]);
                 $data['valueSource'] = [];
                 if (!empty($value)) {
                     foreach ($value as $fileDetail) {
@@ -106,6 +104,7 @@ trait ShowFieldTrait
             'publish_at' => ['showType' => 'edit'],
             'status' => ['valueType' => 'key'],
             //'orderlist' => ['showType' => 'edit'],
+            'url' => ['valueType' => 'link', 'showName' => 'URL'],
             'baidu_url' => ['valueType' => 'link', 'showName' => '百度百科'],
             'wiki_url' => ['valueType' => 'link', 'showName' => '维基百科'],
             //'baidu_url' => ['showType' => 'edit'],

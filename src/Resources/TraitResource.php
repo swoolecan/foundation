@@ -3,8 +3,11 @@ declare(strict_types = 1);
 
 namespace Swoolecan\Foundation\Resources;
 
+use Swoolecan\Foundation\Helpers\TraitResourceManager;
+
 trait TraitResource
 {
+    use TraitResourceManager;
     protected $_scene;
     protected $_repository;
     protected $_simpleResult;
@@ -36,6 +39,9 @@ trait TraitResource
 
     public function getRepository()
     {
+        if (empty($this->_repository)) {
+            $this->_repository = $this->getRepositoryObj();
+        }
         return $this->_repository;
     }
 

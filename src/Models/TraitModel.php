@@ -9,6 +9,8 @@ use Swoolecan\Foundation\Helpers\TraitResourceManager;
 trait TraitModel
 {
     use TraitResourceManager;
+    use CommonDataTrait;
+
     public static $status = [
         0 => '禁用',
         1 => '正常'
@@ -96,5 +98,18 @@ trait TraitModel
 
         }
         return $datas;
+    }
+
+    public function addNotExist($data, $fields)
+    {
+        $where = [];
+        foreach ($fields as $field) {
+            $where[$field] = $data[$field];
+        }
+        $exist = $this->where($where)->first();
+        if ($exist) {
+            return $exist;
+        }
+        return $this->create($data);
     }
 }
