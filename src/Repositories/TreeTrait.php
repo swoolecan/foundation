@@ -68,6 +68,9 @@ trait TreeTrait
             'fieldNames' => $this->getAttributeNames($type),
             'addFormFields' => $addFormFields ? $addFormFields : (object)[],
             'updateFormFields' => $updateFormFields ? $updateFormFields : (object)[],
+            'updateFormTitleField' => 'name',
+            'updateFormTitle' => '',
+            'addFormTitle' => '添加',
         ];
     }
 
@@ -97,6 +100,9 @@ trait TreeTrait
     { 
         $datas = [];
         foreach ($infos as $iKey => $info) { 
+            if (empty($info)) {
+                //\Log::info('permission-exception-' . $iKey);
+            }
             //$info = $iValue->toArray();    
             if ($info[$parentKey] == $parent) {
                 unset($infos[$iKey]);

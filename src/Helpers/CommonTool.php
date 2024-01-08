@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Swoolecan\Foundation\Helpers;
 
+use Illuminate\Hashing\BcryptHasher;
 use Carbon\Carbon;
 
 class CommonTool
 {
     use TraitToolSpell;
 
-	public function getClientDevice()
-	{
-		return AgentTool::getDevice();
-	}
+    public static function createPassword($password)
+    {
+        $hash = new BcryptHasher();
+        return $hash->make($password);
+    }
 
     public static function generateUniqueString($length = 6, $withPre = false)
     {

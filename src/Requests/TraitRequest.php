@@ -111,6 +111,32 @@ trait TraitRequest
         return [];
     }
 
+    public function messages(): array
+    {
+        return array_merge($this->_messages(), [
+            'name.required' => '请填写用户名',
+            'password_old.required' => '请填写正确的原密码',
+            'name.unique' => '用户名已存在',
+            'mobile.required' => '请填写手机号',
+            'mobile' => '手机号格式有误',
+            'mobile.mobile' => '手机号格式有误',
+            'mobile.unique' => '手机号已存在',
+            'name.min' => '用户名最少3个字符',
+            'name.max' => '用户名最多60个字符',
+            'password.min' => '密码最少6个字符',
+            'password.max' => '密码最多20个字符',
+            'realname.required' => '姓名必填',
+            'password.confirmed' => '两次输入的密码不一致',
+            'nickname.required' => '真实姓名必填',
+            'nickname.between' => '真实姓名长度为2-60个字符',
+        ]);
+    }
+
+    protected function _messages()
+    {
+        return [];
+    }
+
     public function checkInfo($info, $data)
     {
         return true;

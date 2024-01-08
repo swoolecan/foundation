@@ -10,6 +10,7 @@ trait TraitModel
 {
     use TraitResourceManager;
     use CommonDataTrait;
+    public $withOperator = false;
 
     public static $status = [
         0 => '禁用',
@@ -111,5 +112,20 @@ trait TraitModel
             return $exist;
         }
         return $this->create($data);
+    }
+
+    public function createWithOperator()
+    {
+        if ($this->withOperator) {
+            $info = request()->get('current_user');
+            if (empty($info)) {
+                return false;
+            }
+            $this->operator_uid = $info['id'] ?? 0;
+            $manager = $this->getModelObj('passport-manager')->where('user_id', $this->operator_uid)->first();
+            $operatorName = $manager ? $manager->nickname : (isset($info['nickname']) && !empty($info['nickname']) ? $info['nickname'] : ($info['name'] ?? ''));
+            $this->operator_name = $operatorName;
+        }
+        return true;
     }
 }

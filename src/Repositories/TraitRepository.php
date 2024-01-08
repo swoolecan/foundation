@@ -141,9 +141,9 @@ trait TraitRepository
         $this->applyScope();
 
         if ($this->model instanceof Builder) {
-            $results = $this->model->limit(2000)->get($columns);
+            $results = $this->model->limit(5000)->get($columns);
         } else {
-            $results = $this->model->limit(2000)->get($columns);
+            $results = $this->model->limit(5000)->get($columns);
         }
 
         $this->resetModel();

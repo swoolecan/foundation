@@ -44,13 +44,17 @@ trait FieldTrait
             'cover' =>['width' => '150'],
             'title' => ['width' => '200', 'rowNum' => 1, 'withPop' => 1],
             'created_at' => ['width' => '160'],
-            'point_operation' => ['width' => '160', 'name' => '特定操作'],
+            'point_operation' => ['width' => '160', 'name' => '特定操作', 'nosort' => 1],
             'ftitle' =>['name' => '头衔', 'width' => '100'],
             'birthday' =>['name' => '出生日期', 'width' => '100'],
             'deathday' =>['name' => '去世日期', 'width' => '100'],
             'status' => ['name' => '状态'],
             'updated_at' => ['name' => '更新时间'],
             'created_at' => ['name' => '创建时间'],
+            'password' => ['name' => '密码', 'hidden' => 1],
+            'password_confirmation' => ['name' => '确认密码', 'hidden' => 1],
+            'note' => ['name' => '备注'],
+            'import_file' => ['name' => '导入文件'],
         ], $this->_getFieldOptions());
     }
 
@@ -62,6 +66,11 @@ trait FieldTrait
     protected function extAttributeNames()
     {
         return [];
+    }
+
+    public function getIgnoreOperations($scene)
+    {
+        return $this->getSceneFields($scene . 'IgnoreOperation');
     }
 
     public function getSceneFields($scene = null)

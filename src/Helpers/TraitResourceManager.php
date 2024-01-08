@@ -34,9 +34,9 @@ trait TraitResourceManager
     public function getResourceObj($info, $scene, $code = '', $simpleResult = false)
     {
         $params = [
-            'resource' => $info, 
-            'scene' => $scene, 
-            //'repository' => $repository, 
+            'resource' => $info,
+            'scene' => $scene,
+            //'repository' => $repository,
             'simpleResult' => $simpleResult,
         ];
         return $this->getObject('resource', $code, $params);
@@ -45,9 +45,9 @@ trait TraitResourceManager
     public function getCollectionObj($infos, $scene, $code = '', $simpleResult = false)
     {
         $params = [
-            'resource' => $infos, 
-            'scene' => $scene, 
-            //'repository' => $repository, 
+            'resource' => $infos,
+            'scene' => $scene,
+            //'repository' => $repository,
             'simpleResult' => $simpleResult
         ];
         return $this->getObject('collection', $code, $params);
@@ -72,5 +72,55 @@ trait TraitResourceManager
     protected function getAppcode()
     {
         return 'passport';
+    }
+
+    public function createSingleOrderid($pre = '')
+    {
+        $yCode = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+        $time = strval(time());
+        $microtime = strval(microtime());
+        $orderSn = $yCode[intval(date('Y')) - 2023] . strtoupper(date('m')) . date('d') . substr($time, -5) . substr($microtime, 2, 5) . sprintf('%02d', rand(0, 99));
+        return $pre . $orderSn;
+    }
+
+    public function getVersion()
+    {
+        return request()->header('version');
+    }
+
+    public function compareVersion($version, $operation = '<=')
+    {
+        $compare = version_compare(strval($this->getVersion()), $version, $operation);
+        return $compare;
+    }
+
+    public function compareBackendVersion($version, $operation = '<=')
+    {
+        $currentVersion = strval(currentBackendVersion());
+        $compare = version_compare($currentVersion, $version, $operation);
+        return $compare;
+    }
+
+    public function createRandomCode()
+    {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        // 生成随机字母序列
+        $randomString = str_shuffle($characters);
+        // 例如，生成一个包含 10 个随机字母的序列
+        $randomString = substr($randomString, 0, 10);
+        return $randomString;
+    }
+
+    public function logTimestamp($start, $title)
+    {
+        $end = microtime(true);
+        \Log::info('record-time-' . $title . '==' . ($end - $start));
+    }
+
+    public function getCurrentBackendRoles()
+    {
+        $request = request();
+        $rolePermissions = $request->get('rolePermissions');
+        return $rolePermissions['roles'] ?? [];
     }
 }

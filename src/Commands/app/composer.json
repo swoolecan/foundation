@@ -10,7 +10,7 @@
     "description": "A application of {{MODULE}}",
     "license": "MIT",
     "require": {
-        "php": "^7.3.0"
+        "php": "^8.2.0"
     },
     "require-dev": {
     },
