@@ -25,6 +25,7 @@ trait TraitCollection
         $this->setScene($params['scene']);
         //$this->repository = $params['repository'];
         $this->repository = $this->getRepositoryObj();
+        $this->repository->currentScene = $params['scene'];
         $this->simpleResult = $params['simpleResult'] ?? false;
         parent::__construct($params['resource']);
     }
@@ -41,7 +42,16 @@ trait TraitCollection
         if (method_exists($this, $method)) {
             return $this->$method();
         }
+        if (in_array($scene, $this->listScenes())) {
+            $result = $this->_listArray();
+            return $result;
+        }
         return [];
+    }
+
+    protected function listScenes()
+    {
+        return $this->repository->listScenes();
     }
 
     protected function _keyvalueArray()
@@ -122,6 +132,7 @@ trait TraitCollection
             'selectionOperations' => $this->repository->getSelectionOperations($this->getScene()),
             'formInfos' => $this->formatFormInfos(),
             'ignoreOperations' => $this->repository->getIgnoreOperations($this->getScene()),
+            'currentScene' => $this->getScene(),
 
             /*'addFormFields' => $addFormFields ? $addFormFields : (object)[],
             'updateFormFields' => $updateFormFields ? $updateFormFields : (object)[],

@@ -79,7 +79,12 @@ trait FieldTrait
             'inventory_yesterday' => ['name' => '昨日库存'],
             'other_area' => ['name' => '取货库位'],
             //'' => ['name' => ''],
-        ], $this->_getFieldOptions());
+        ], $this->_getFieldBaseOptions(), $this->_getFieldOptions());
+    }
+
+    protected function _getFieldBaseOptions()
+    {
+        return [];
     }
 
     protected function _getFieldOptions()

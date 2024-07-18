@@ -123,7 +123,7 @@ trait TraitModel
             }
             $this->operator_uid = $info['id'] ?? 0;
             $manager = $this->getModelObj('passport-manager')->where('user_id', $this->operator_uid)->first();
-            $operatorName = $manager ? $manager->nickname : (isset($info['nickname']) && !empty($info['nickname']) ? $info['nickname'] : ($info['name'] ?? ''));
+            $operatorName = $manager && $manager->nickname ? $manager->nickname : (isset($info['nickname']) && !empty($info['nickname']) ? $info['nickname'] : ($info['name'] ?? ''));
             $this->operator_name = $operatorName;
         }
         return true;

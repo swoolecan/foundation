@@ -40,7 +40,7 @@ trait TraitToolSpell
         // 获取首字符字符串
         // PINYIN_KEEP_NUMBER); // nh2018
         // PINYIN_KEEP_ENGLISH); // HNY2018
-        return self::getSpellInstance()->abbr($string, $linkStr);
+        return self::getSpellInstance()->abbr($string)->join($linkStr);
     }
 
     public static function getLongSpell($string, $option)

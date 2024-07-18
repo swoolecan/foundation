@@ -76,10 +76,13 @@ trait TraitResourceManager
 
     public function createSingleOrderid($pre = '')
     {
+        /*$str = date('Ymds');
+        $str = substr($str, 2) . rand(100, 999);
+        return $pre . $str;*/
         $yCode = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
         $time = strval(time());
         $microtime = strval(microtime());
-        $orderSn = $yCode[intval(date('Y')) - 2023] . strtoupper(date('m')) . date('d') . substr($time, -5) . substr($microtime, 2, 5) . sprintf('%02d', rand(0, 99));
+        $orderSn = $yCode[intval(date('Y')) - 2024] . strtoupper(date('m')) . date('d') . substr($time, -2) . substr($microtime, 2, 3) . sprintf('%02d', rand(0, 99));
         return $pre . $orderSn;
     }
 

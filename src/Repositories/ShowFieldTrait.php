@@ -30,7 +30,27 @@ trait ShowFieldTrait
                 continue ;
             }
 
+            if (isset($data['pointValueMethod'])) {
+                $pointValueMethod = $data['pointValueMethod'];
+                $value = $this->$pointValueMethod($model, $field);
+            }
+            if (empty($value) && isset($data['pointDefaultValue'])) {
+                $value = $data['pointDefaultValue'];
+            }
+            if (empty($value) && isset($data['pointDefaultField'])) {
+                $pdField = $data['pointDefaultField'];
+                $value = $model->$pdField;
+            }
+            if (empty($value) && isset($data['pointDefaultMethod'])) {
+                $pointDefaultMethod = $data['pointDefaultMethod'];
+                $value = $this->$pointDefaultMethod($model, $field);
+            }
+
             $data['valueSource'] = $value;
+            if (isset($data['valueSourceMethod'])) {
+                $vsMethod = $data['valueSourceMethod'];
+                $data['valueSource'] = $this->$vsMethod($model, $field);
+            }
             $data['showType'] = $data['showType'] ?? 'common';
             $valueType = $data['valueType'] ?? 'self';
 
@@ -39,7 +59,14 @@ trait ShowFieldTrait
             } elseif ($valueType == 'radio') {
                 $value = $this->getKeyValues($field);
             } elseif ($valueType == 'select') {
-                $value = $this->getKeyValues($field);
+                if (isset($data['infos'])) {
+                    $value = $data['infos'];
+                } elseif (isset($data['infosMethod'])) {
+                    $iMethod = $data['infosMethod'];
+                    $value = $this->$iMethod($model, $field);
+                } else {
+                    $value = $this->getKeyValues($field);
+                }
             } elseif ($valueType == 'link') {
                 $value = $model->$field;
                 if (!empty($value)) {
