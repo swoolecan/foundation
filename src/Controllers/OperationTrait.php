@@ -21,7 +21,8 @@ trait OperationTrait
         $repository->currentScene = $scene;
         $repository = $this->dealCriteria($scene, $repository, $params);
         if (in_array($scene, $this->pageScenes())) {
-            $perPage = $params['per_page'] ?? 25;
+            $forcePageSize = $this->forcePointPageSize();
+            $perPage = $forcePageSize ?: ($params['per_page'] ?? 25);
             $list = $repository->paginate(intval($perPage));
         } else {
             $list = $repository->all();
@@ -30,6 +31,11 @@ trait OperationTrait
         //$collection = $this->getCollectionObj(null, ['resource' => $list, 'scene' => $scene, 'repository' => $repository, 'simpleResult' => $simpleResult]);
         $collection = $this->getCollectionObj($list, $scene, null, $simpleResult);
         return $collection->toResponse($this->request);
+    }
+
+    public function forcePointPageSize()
+    {
+        return 0;
     }
 
     protected function pageScenes()

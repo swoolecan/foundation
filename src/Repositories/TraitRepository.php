@@ -156,4 +156,9 @@ trait TraitRepository
     {
         return parent::applyCriteria();
     }
+
+    public function listScenes()
+    {
+        return [];
+    }
 }

@@ -36,11 +36,6 @@ trait TraitController
         return $repository->getDealSearchFields($scene, $params);
     }
 
-    public function getVersion()
-    {
-        return $this->request->header('version');
-    }
-
     public function getRouteParam($param)
     {
         return $this->resource->getRouteParam($param);

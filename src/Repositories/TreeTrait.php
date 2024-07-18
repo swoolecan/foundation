@@ -101,7 +101,7 @@ trait TreeTrait
         $datas = [];
         foreach ($infos as $iKey => $info) { 
             if (empty($info)) {
-                //\Log::info('permission-exception-' . $iKey);
+                \Log::info('permission-exception-' . $iKey);
             }
             //$info = $iValue->toArray();    
             if ($info[$parentKey] == $parent) {
@@ -122,8 +122,14 @@ trait TreeTrait
         return $datas;        
     }
 
-    public function getInfosForTree($orderField = 'orderlist')
+    public function getInfosForTree()
     {
-        return $this->model->orderBy($orderField, 'desc')->get();
+        $orderInfo = $this->getDefaultOrderField();
+        return $this->model->orderBy($orderInfo['field'], $orderInfo['type'])->get();
+    }
+
+    public function getDefaultOrderField()
+    {
+        return ['field' => 'orderlist', 'type' => 'desc'];
     }
 }

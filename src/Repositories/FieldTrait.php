@@ -55,7 +55,14 @@ trait FieldTrait
             'password_confirmation' => ['name' => '确认密码', 'hidden' => 1],
             'note' => ['name' => '备注'],
             'import_file' => ['name' => '导入文件'],
-        ], $this->_getFieldOptions());
+
+            //'' => ['name' => ''],
+        ], $this->_getFieldBaseOptions(), $this->_getFieldOptions());
+    }
+
+    protected function _getFieldBaseOptions()
+    {
+        return [];
     }
 
     protected function _getFieldOptions()

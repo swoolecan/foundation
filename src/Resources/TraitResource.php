@@ -29,7 +29,16 @@ trait TraitResource
         if (method_exists($this, $method)) {
             return $this->$method();
         }
+        if (in_array($scene, $this->listScenes())) {
+            $result = $this->_listArray($scene);
+            return $result;
+        }
         return $this->_keyvalueArray();
+    }
+
+    protected function listScenes()
+    {
+        return $this->getRepositoryObj()->listScenes();
     }
 
     public function setRepository($repository)
