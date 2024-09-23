@@ -114,7 +114,7 @@ trait TraitModel
         return $this->create($data);
     }
 
-    public function createWithOperator()
+    public function createWithOperator($return = 'object')
     {
         if ($this->withOperator) {
             $info = request()->get('current_user');
@@ -125,6 +125,12 @@ trait TraitModel
             $manager = $this->getModelObj('passport-manager')->where('user_id', $this->operator_uid)->first();
             $operatorName = $manager && $manager->nickname ? $manager->nickname : (isset($info['nickname']) && !empty($info['nickname']) ? $info['nickname'] : ($info['name'] ?? ''));
             $this->operator_name = $operatorName;
+            if ($return == 'array') {
+                return [
+                    'operator_uid' => $this->operator_uid,
+                    'operator_name' => $this->operator_name,
+                ];
+            }
         }
         return true;
     }

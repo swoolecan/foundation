@@ -96,7 +96,7 @@ trait TraitRequest
         return $data;
     }
 
-    public function filterDirtyData($data)
+    public function filterDirtyData($data, $info = null)
     {
         return $data;
     }

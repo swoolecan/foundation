@@ -95,7 +95,7 @@ trait OperationTrait
             return $this->resource->throwException(422, $checkInfo['message']);
         }
         $sourceData = $request->validated();
-        $data = $request->filterDirtyData($sourceData);
+        $data = $request->filterDirtyData($sourceData, $info);
         $result = $repository->updateInfo($info, $data);
 
         $this->getServiceObj('passport-managerPermission')->writeManagerLog($sourceData, $info->toArray());
