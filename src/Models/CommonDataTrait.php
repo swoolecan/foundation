@@ -45,14 +45,15 @@ trait CommonDataTrait
             $params['info_id'] = $this->$key;
         }
 
-        if ($currentAppcode == 'passport') {
+        return $this->getModelObj('passport-tagInfo')->getDatas($params);
+        /*if ($currentAppcode == 'passport') {
             $tagInfo = $this->getResource()->getObject('model', 'tagInfo');
             return $tagInfo->getDatas($params);
         }
 
         $class = "\Framework\Baseapp\RpcClient\PassportRpcClient";
         $client = $this->getResource()->getObjectByClass($class);
-        return $client->getTagInfoDatas($params);
+        return $client->getTagInfoDatas($params);*/
     }
 
     public function updateTagInfos($params)
@@ -65,14 +66,15 @@ trait CommonDataTrait
             $params['info_id'] = $this->$key;
         }
 
-        if ($currentAppcode == 'passport') {
+        return $this->getModelObj('passport-tagInfo')->createTagInfos($params);
+        /*if ($currentAppcode == 'passport') {
             $tagInfo = $this->getResource()->getObject('model', 'tagInfo');
             return $tagInfo->createTagInfos($params);
         }
 
         $class = "\Framework\Baseapp\RpcClient\PassportRpcClient";
         $client = $this->getResource()->getObjectByClass($class);
-        return $client->createTagInfos($params);
+        return $client->createTagInfos($params);*/
     }
 
     public function deleteTagInfos($params)

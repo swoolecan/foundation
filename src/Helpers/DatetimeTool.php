@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Swoolecan\Foundation\Helpers;
 
 use Carbon\Carbon;
+use Overtrue\ChineseCalendar\Calendar;
 
 class DatetimeTool
 {
@@ -14,5 +15,11 @@ class DatetimeTool
             return Carbon::now();
         }
         return Carbon::parse($string);
+    }
+
+    static public function calendar()
+    {
+        $calendar = new Calendar();
+        $result = $calendar->solar(1881, 8, 3);
     }
 }
