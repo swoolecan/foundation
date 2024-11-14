@@ -18,11 +18,11 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^7.5.0",
-        "jenssegers/agent": "^2.6.4",
-        "overtrue/easy-sms": "^2.4.1",
-        "w7corp/easywechat": "^2.1.41",
-        "php": "^8.2"
+        "php": "^8.2",
+        "guzzlehttp/guzzle": "^7.9",
+        "jenssegers/agent": "^2.6",
+        "overtrue/easy-sms": "^3.0",
+        "w7corp/easywechat": "^5.35"
     },
     "autoload": {
         "psr-4": {
@@ -38,7 +38,10 @@
         "test": "phpunit"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "easywechat-composer/easywechat-composer": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
